@@ -3,3 +3,13 @@ notifications:
   hipchat:
     rooms:
       secure: j3hkJ/Etd8gQDvhpgwBJhutwFA1vex8Q18FMsfiSih1JDoA+PJNfzyG21UmO0g2CDMBfcniKWTHN6VZpN+jSgeZ+UCbz1NMc8rGT1KgexI6CcH1DLGNFJ1o+5oToNZHfRyA7QB1zJz8q8gxrSVPHdqZgb8doAcvMFK0GqewY9dI=
+deploy:
+  provider: releases
+  api_key:
+    secure: IP25v/puP1qgGfCRWG+/7EKDU6pyyaU54WRqqNICi8qcubmXxTmfY6/QJeF2bS+MLFZBfttUjdnHWxOMTWBUAP8HFIRkgGHsFIHxiFYbUaKdRXJOZPElpP08mm7HU1Lz/Tz0rU99ry9TVG28RfmGvpsIM6+OdlG8SDdcESqHacg=
+  file: build/libs/xlr-xlr-plugin-1.0.jar
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
+    repo: xebialabs-community/xlr-xlr-plugin
