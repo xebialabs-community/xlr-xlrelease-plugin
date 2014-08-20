@@ -32,7 +32,7 @@ credentials = CredentialsFallback(xlrServer, username, password).getCredentials(
 #Get Template id
 templateId = None
 xlrAPIUrl = xlrUrl + '/releases/templates'
-xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json', None, None).send()
+xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
 if xlrResponse.status ==TEMPLATES_FOUND_STATUS:
     data = json.loads(xlrResponse.read())
     for template in data:
@@ -62,7 +62,7 @@ print "Sending content %s" % content
 
 xlrAPIUrl = xlrUrl + '/releases'
 
-xlrResponse = XLRequest(xlrAPIUrl, 'POST', content, credentials['username'], credentials['password'], 'application/json', None, None).send()
+xlrResponse = XLRequest(xlrAPIUrl, 'POST', content, credentials['username'], credentials['password'], 'application/json').send()
 
 releaseId = None
 if xlrResponse.status == RELEASE_CREATED_STATUS:
@@ -81,7 +81,7 @@ content = """
 """
 
 xlrAPIUrl = xlrUrl + '/releases/' + releaseId + "/start"
-xlrResponse = XLRequest(xlrAPIUrl, 'POST', content, credentials['username'], credentials['password'], 'application/json', None, None).send()
+xlrResponse = XLRequest(xlrAPIUrl, 'POST', content, credentials['username'], credentials['password'], 'application/json').send()
 if xlrResponse.status == RELEASE_STARTED_STATUS:
     print "Started %s in XLR" % (releaseId)
 else:
@@ -94,7 +94,7 @@ else:
 xlrAPIUrl = xlrUrl + '/releases/' + releaseId
 
 while True:
-    xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json', None, None).send()
+    xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
     if xlrResponse.status == RECEIVED_RELEASE_STATUS:
         data = json.loads(xlrResponse.read())
         status = data["status"]
