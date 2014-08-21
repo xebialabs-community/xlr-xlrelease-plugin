@@ -32,6 +32,7 @@ if xlrServer is None:
     sys.exit(1)
 
 xlrUrl = xlrServer['url']
+xlrUrl = xlrUrl.rstrip("/")
 
 credentials = CredentialsFallback(xlrServer, username, password).getCredentials()
 
