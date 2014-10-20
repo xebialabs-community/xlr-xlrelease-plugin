@@ -8,7 +8,7 @@
 -->
 <synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-	<type type="xlr.CreateAndStartSubRelease" extends="xlrelease.PythonScript">
+    <type type="xlr.CreateAndStartSubRelease" extends="xlrelease.PythonScript">
         <property name="scriptLocation" default="xlr/CreateAndStartSubRelease.py" hidden="true" />
         <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
 
@@ -24,7 +24,20 @@
         <property name="status" category="output"/> 
     </type>
 
-	<type type="xlr.Server" extends="configuration.HttpConnection"/>
+    <type type="xlr.CreateTemplate" extends="xlrelease.PythonScript">
+       <property name="scriptLocation" default="xlr/CreateTemplate.py" hidden="true" />
+       <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
+       <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci"/>
+       <property name="username" category="input" label="username" required="true" />
+       <property name="password" password="true" category="input" required="true" />
+
+       <property name="templateName" category="input" label="Template Name" required="true" />
+       <property name="tags" category="input" required="false" />
+
+       <property name="templateId" category="output"/> 
+    </type>
+
+    <type type="xlr.Server" extends="configuration.HttpConnection"/>
 
 
 
