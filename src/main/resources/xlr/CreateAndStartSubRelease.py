@@ -38,7 +38,7 @@ credentials = CredentialsFallback(xlrServer, username, password).getCredentials(
 
 #Get Template id
 templateId = None
-xlrAPIUrl = xlrUrl + '/releases/templates'
+xlrAPIUrl = '%s/releases/templates?filter=%s' % (xlrUrl, templateName)
 xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
 if xlrResponse.status ==TEMPLATES_FOUND_STATUS:
     data = json.loads(xlrResponse.read())
