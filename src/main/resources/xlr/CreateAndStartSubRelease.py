@@ -4,7 +4,7 @@
 # FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 #
 
-import sys, string, time
+import sys, string, time, urllib
 import com.xhaus.jyson.JysonCodec as json
 from datetime import date
 
@@ -38,7 +38,8 @@ credentials = CredentialsFallback(xlrServer, username, password).getCredentials(
 
 #Get Template id
 templateId = None
-xlrAPIUrl = '%s/releases/templates?filter=%s' % (xlrUrl, templateName)
+filter = { 'filter' : templateName}
+xlrAPIUrl = '%s/releases/templates?%s' % (xlrUrl, urllib.urlencode(filter))
 xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
 if xlrResponse.status ==TEMPLATES_FOUND_STATUS:
     data = json.loads(xlrResponse.read())
