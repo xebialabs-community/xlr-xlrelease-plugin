@@ -22,15 +22,15 @@
         <property name="releaseDescription" category="input" label="Release Description" required="false" />
         <property name="variables" category="input" required="false" />
 
-        <property name="status" category="output"/> 
+        <property name="status" category="output" />
     </type>
 
     <type type="xlr.CreateTemplate" extends="xlr.XlrControlTask">
        <property name="templateName" category="input" label="Template Name" required="true" />
        <property name="tags" category="input" required="false" />
 
-       <property name="templateId" category="output"/> 
+       <property name="templateId" category="output" />
     </type>
 
-    <type type="xlr.Server" extends="configuration.HttpConnection"/>
+    <type type="xlr.Server" extends="configuration.HttpConnection" />
 </synthetic>

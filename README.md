@@ -8,16 +8,17 @@ See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index
 
 The xlr-xlr-plugin is an XL Release plugin that allows you to:
   * programmatically create a template and assign tags to it
-  * invoke (create and start) another release from an existing release. So you can call a subrelease from a parent release.
+  * create and start another release from an existing release. So you can create a subrelease from a parent release
+  * programmatically delete phases in the current release
 
 ## Tasks ##
 
 + Create and Start SubRelease 
-  * `templateName`: Name of the template to invoke (`string`) 
-  * `releaseTitle`: Name of the sub release instance (`string`)
-  * `releaseDescription`: Description of the sub release (`string`)
-  * `variables`: Comma separated key-value pairs, e.g. var1=value1,var2=value2 (`string`)
+  * `templateName`: Name of the template from which to create the subrelease (`string`) 
+  * `releaseTitle`: Name of the subrelease (`string`)
+  * `releaseDescription`: Description of the subrelease (`string`)
+  * `variables`: Comma-separated key-value pairs for the values of variables required by the subrelease, e.g. var1=value1,var2=value2 (`string`)
 
 + Create Template
   * `templateName`: Name of the template to create (`string`)
-  * `tags`: Comma separated list of tags to associate with this template e.g. tag1,tag2 (`string`)
+  * `tags`: Comma-separated list of tags to associate with this template e.g. tag1,tag2 (`string`)
