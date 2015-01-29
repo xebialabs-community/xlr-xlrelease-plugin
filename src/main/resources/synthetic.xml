@@ -8,14 +8,15 @@
 -->
 <synthetic xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-    <type type="xlr.CreateAndStartSubRelease" extends="xlrelease.PythonScript">
-        <property name="scriptLocation" default="xlr/CreateAndStartSubRelease.py" hidden="true" />
+    <type type="xlr.XlrControlTask" extends="xlrelease.PythonScript" virtual="true">
         <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
 
-        <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci"/>
-        <property name="username" category="input" label="username" required="true" />
-        <property name="password" password="true" category="input" required="true" />
+        <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci" />
+        <property name="username" category="input" />
+        <property name="password" password="true" category="input" />
+    </type>
 
+    <type type="xlr.CreateAndStartSubRelease" extends="xlr.XlrControlTask">
         <property name="templateName" category="input" label="Template Name" required="true" />
         <property name="releaseTitle" category="input" label="Release Title" required="true" />
         <property name="releaseDescription" category="input" label="Release Description" required="false" />
@@ -24,13 +25,7 @@
         <property name="status" category="output"/> 
     </type>
 
-    <type type="xlr.CreateTemplate" extends="xlrelease.PythonScript">
-       <property name="scriptLocation" default="xlr/CreateTemplate.py" hidden="true" />
-       <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
-       <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci"/>
-       <property name="username" category="input" label="username" required="true" />
-       <property name="password" password="true" category="input" required="true" />
-
+    <type type="xlr.CreateTemplate" extends="xlr.XlrControlTask">
        <property name="templateName" category="input" label="Template Name" required="true" />
        <property name="tags" category="input" required="false" />
 
