@@ -38,7 +38,4 @@
     </type>
 
     <type type="xlr.Server" extends="configuration.HttpConnection"/>
-
-
-
 </synthetic>
