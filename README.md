@@ -22,3 +22,7 @@ The xlr-xlr-plugin is an XL Release plugin that allows you to:
 + Create Template
   * `templateName`: Name of the template to create (`string`)
   * `tags`: Comma-separated list of tags to associate with this template e.g. tag1,tag2 (`string`)
+
++ Delete Phases
+  * `phases`: Comma-separated list of names of phases in the current release to delete e.g. phase1,phase2 (`string`)
+  * **This task requires XL Release 4.5.0 or higher**

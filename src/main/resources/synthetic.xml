@@ -32,5 +32,9 @@
        <property name="templateId" category="output" />
     </type>
 
+    <type type="xlr.DeletePhases" extends="xlr.XlrControlTask">
+       <property name="phases" category="input" description="Comma-seperated list of phases to delete" />
+    </type>
+
     <type type="xlr.Server" extends="configuration.HttpConnection" />
 </synthetic>
