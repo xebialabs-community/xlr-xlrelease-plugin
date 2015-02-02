@@ -63,5 +63,3 @@ else:
     print "Failed to create Template in XLR"
     xlrResponse.errorDump()
     sys.exit(1)
-
-
