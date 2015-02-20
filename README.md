@@ -10,6 +10,8 @@ The xlr-xlr-plugin is a XL Release plugin that allows to
   * invoke (create and start) another template from an existing template. So you can call from a parent template a subtemplate.
   * create a template and associate users/groups to teams within that template
 
+For XL Release version 4.5.0 and upwards you'll need at least version 1.5 of the plugin.
+
 ## Types ##
 
 + Create and Start SubRelease 

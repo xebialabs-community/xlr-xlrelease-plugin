@@ -39,7 +39,7 @@ credentials = CredentialsFallback(xlrServer, username, password).getCredentials(
 #Get Template id
 templateId = None
 filter = { 'filter' : templateName}
-xlrAPIUrl = '%s/releases/templates?%s' % (xlrUrl, urllib.urlencode(filter))
+xlrAPIUrl = '%s/api/v1/templates?%s' % (xlrUrl, urllib.urlencode(filter))
 xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
 if xlrResponse.status ==TEMPLATES_FOUND_STATUS:
     data = json.loads(xlrResponse.read())
@@ -62,9 +62,11 @@ variables = processVariables(variables)
 if releaseDescription is None:
     releaseDescription = ""
 
+#{"owner":{"username":"admin","fullName":"XL Release Administrator"},"abortOnFailure":false,"scriptUsername":null,"scriptUserPassword":null}
+
 content = """
 {"title":"%s","description":"%s","scheduledStartDate":"%sT23:58:00.000Z","dueDate":"%sT23:59:00.000Z","plannedDuration":null,"variables":[%s],"tags":[],"flag":{"status":"OK"},"templateId":"%s"}
-""" % (releaseTitle, releaseDescription, date.today(), date.today(), variables, templateId)
+""" % (releaseTitle, releaseDescription, date.today(), date.today(), variables, templateId.split("/")[1])
 
 print "Sending content %s" % content
 
@@ -95,7 +97,7 @@ if xlrResponse.status == RELEASE_STARTED_STATUS:
 else:
     print "Failed to start release in XLR"
     xlrResponse.errorDump()
-    sys.exit(1) 
+    sys.exit(1)
 
 
 # Wait for subrelease to be finished
