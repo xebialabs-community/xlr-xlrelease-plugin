@@ -10,6 +10,7 @@
 
     <type type="xlr.XlrControlTask" extends="xlrelease.PythonScript" virtual="true">
         <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
+        <property name="taskColor" hidden="true" default="#AA217E" />
 
         <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci" />
         <property name="username" category="input" />
@@ -36,5 +37,14 @@
        <property name="phases" category="input" description="Comma-seperated list of phases to delete" />
     </type>
 
+    <type type="xlr.GetTaskId" extends="xlrelease.PythonScript">
+        <property name="scriptLocation" default="xlr/GetTaskId.py" hidden="true" />
+        <property name="taskColor" hidden="true" default="#AA217E" />
+        <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
+
+        <property name="taskTitle" category="input" label="Task Title" required="true" />
+        <property name="taskId" category="output" />
+    </type>
+    
     <type type="xlr.Server" extends="configuration.HttpConnection" />
 </synthetic>

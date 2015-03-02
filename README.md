@@ -27,3 +27,7 @@ For XL Release version 4.5.x you'll need at least version 1.5 of the plugin.
 + Delete Phases
   * `phases`: Comma-separated list of names of phases in the current release to delete e.g. phase1,phase2 (`string`)
   * **This task requires XL Release 4.5.0 or higher**
+
++ Get Task ID
+  *  `taskTitle`: Title of the task to get the id for (`string`)
+  * **This task requires XL Release 4.5.0 or higher**
