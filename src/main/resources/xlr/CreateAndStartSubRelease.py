@@ -4,7 +4,9 @@
 # FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 #
 
-import sys, string, time, urllib
+import sys
+import time
+import urllib
 import com.xhaus.jyson.JysonCodec as json
 from datetime import date
 
@@ -12,6 +14,7 @@ RELEASE_CREATED_STATUS = 200
 TEMPLATES_FOUND_STATUS = 200
 RELEASE_STARTED_STATUS = 200
 RECEIVED_RELEASE_STATUS = 200
+
 
 def processVariables(variables):
     result = ""
@@ -23,8 +26,8 @@ def processVariables(variables):
             if first:
                 first = False
             else:
-                result = result + ","    
-            result = result + "{\"key\":\"${%s}\",\"value\":\"%s\",\"type\":\"DEFAULT\"}" % (variable.split('=', 1)[0],variable.split('=', 1)[1])
+                result = result + ","
+            result = result + "{\"key\":\"${%s}\",\"value\":\"%s\",\"type\":\"DEFAULT\"}" % (variable.split('=', 1)[0], variable.split('=', 1)[1])
     return result
 
 if xlrServer is None:
@@ -38,15 +41,15 @@ credentials = CredentialsFallback(xlrServer, username, password).getCredentials(
 
 #Get Template id
 templateId = None
-filter = { 'filter' : templateName}
+filter = {'filter': templateName}
 xlrAPIUrl = '%s/api/v1/templates?%s' % (xlrUrl, urllib.urlencode(filter))
 xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
-if xlrResponse.status ==TEMPLATES_FOUND_STATUS:
+if xlrResponse.status == TEMPLATES_FOUND_STATUS:
     data = json.loads(xlrResponse.read())
     for template in data:
         if template["title"] == templateName:
             templateId = template["id"]
-            print "Found template %s with id %s" % (templateName,templateId)
+            print "Found template %s with id %s" % (templateName, templateId)
             break
     if templateId is None:
         print "Failed to find template in XL Release %s" % templateName
@@ -117,5 +120,5 @@ while True:
     else:
         print "Failed to get release status in XLR"
         xlrResponse.errorDump()
-        sys.exit(1) 
+        sys.exit(1)
     time.sleep(5)

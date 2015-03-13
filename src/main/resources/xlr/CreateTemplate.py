@@ -4,12 +4,13 @@
 # FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 #
 
-import sys, string, time
+import sys
 import com.xhaus.jyson.JysonCodec as json
 from datetime import date
 
 TEMPLATE_CREATED_STATUS = 200
 TEMPLATES_FOUND_STATUS = 200
+
 
 def processTags(tags):
     result = ""
@@ -38,12 +39,12 @@ xlrAPIUrl = xlrUrl + '/releases/templates'
 
 #Create Template
 content = """
-{"title":"%s","tags":[%s],"scheduledStartDate":"%sT23:58:00.000Z","dueDate":null,"plannedDuration":null,"allowConcurrentReleasesFromTrigger":true} 
-""" % (templateName, processTags(tags) , date.today())
+{"title":"%s","tags":[%s],"scheduledStartDate":"%sT23:58:00.000Z","dueDate":null,"plannedDuration":null,"allowConcurrentReleasesFromTrigger":true}
+""" % (templateName, processTags(tags), date.today())
 
 #Check if template already exists - we don't want to create a duplicate
 xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
-if xlrResponse.status ==TEMPLATES_FOUND_STATUS:
+if xlrResponse.status == TEMPLATES_FOUND_STATUS:
     data = json.loads(xlrResponse.read())
     for template in data:
         if template["title"] == templateName:
