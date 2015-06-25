@@ -7,7 +7,7 @@ deploy:
   provider: releases
   api_key:
     secure: IP25v/puP1qgGfCRWG+/7EKDU6pyyaU54WRqqNICi8qcubmXxTmfY6/QJeF2bS+MLFZBfttUjdnHWxOMTWBUAP8HFIRkgGHsFIHxiFYbUaKdRXJOZPElpP08mm7HU1Lz/Tz0rU99ry9TVG28RfmGvpsIM6+OdlG8SDdcESqHacg=
-  file: build/libs/xlr-xlrelease-plugin-1.6.1.jar
+  file: build/libs/xlr-xlrelease-plugin-*.jar
   skip_cleanup: true
   on:
     all_branches: true

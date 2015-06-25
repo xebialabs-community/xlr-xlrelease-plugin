@@ -18,6 +18,7 @@
     </type>
 
     <type type="xlr.CreateAndStartSubRelease" extends="xlr.XlrControlTask">
+        <property name="scriptLocation" default="xlr/CreateAndStartSubRelease.py" hidden="true" />
         <property name="templateName" category="input" label="Template Name" required="true" />
         <property name="releaseTitle" category="input" label="Release Title" required="true" />
         <property name="releaseDescription" category="input" label="Release Description" required="false" />

@@ -41,6 +41,7 @@ credentials = CredentialsFallback(xlrServer, username, password).getCredentials(
 
 #Get Template id
 templateId = None
+tags = None
 filter = {'filter': templateName}
 xlrAPIUrl = '%s/api/v1/templates?%s' % (xlrUrl, urllib.urlencode(filter))
 xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
@@ -49,6 +50,7 @@ if xlrResponse.status == TEMPLATES_FOUND_STATUS:
     for template in data:
         if template["title"] == templateName:
             templateId = template["id"]
+            tags = [str(t) for t in template["tags"]]
             print "Found template %s with id %s" % (templateName, templateId)
             break
     if templateId is None:
@@ -68,8 +70,8 @@ if releaseDescription is None:
 #{"owner":{"username":"admin","fullName":"XL Release Administrator"},"abortOnFailure":false,"scriptUsername":null,"scriptUserPassword":null}
 
 content = """
-{"title":"%s","description":"%s","scheduledStartDate":"%sT23:58:00.000Z","dueDate":"%sT23:59:00.000Z","plannedDuration":null,"variables":[%s],"tags":[],"flag":{"status":"OK"},"templateId":"%s"}
-""" % (releaseTitle, releaseDescription, date.today(), date.today(), variables, templateId.split("/")[1])
+{"title":"%s","description":"%s","scheduledStartDate":"%sT23:58:00.000Z","dueDate":"%sT23:59:00.000Z","plannedDuration":null,"variables":[%s],"tags":%s,"flag":{"status":"OK"},"templateId":"%s"}
+""" % (releaseTitle, releaseDescription, date.today(), date.today(), variables, repr(tags).replace("'",'"'), templateId.split("/")[1])
 
 print "Sending content %s" % content
 
