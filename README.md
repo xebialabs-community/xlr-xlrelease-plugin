@@ -19,6 +19,7 @@ For XL Release version 4.5.x you'll need at least version 1.5 of the plugin.
   * `releaseTitle`: Name of the subrelease (`string`)
   * `releaseDescription`: Description of the subrelease (`string`)
   * `variables`: Comma-separated key-value pairs for the values of variables required by the subrelease, e.g. var1=value1,var2=value2 (`string`)
+  * `asynch`: If [false], the task will wait for the subrelease to finish
 
 + Create Template
   * `templateName`: Name of the template to create (`string`)
