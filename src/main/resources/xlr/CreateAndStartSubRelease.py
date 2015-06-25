@@ -105,10 +105,10 @@ else:
     sys.exit(1)
 
 
-# Wait for subrelease to be finished
+# Wait for subrelease to be finished (only if asynch is true)
 xlrAPIUrl = xlrUrl + '/releases/' + releaseId
 
-while True:
+while not asynch:
     xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
     if xlrResponse.status == RECEIVED_RELEASE_STATUS:
         data = json.loads(xlrResponse.read())
