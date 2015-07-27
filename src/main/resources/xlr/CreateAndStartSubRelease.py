@@ -6,121 +6,50 @@
 
 import sys
 import time
-import urllib
-import com.xhaus.jyson.JysonCodec as json
-from datetime import date
 
-RELEASE_CREATED_STATUS = 200
-TEMPLATES_FOUND_STATUS = 200
-RELEASE_STARTED_STATUS = 200
-RECEIVED_RELEASE_STATUS = 200
+from xlr.XLReleaseClientUtil import XLReleaseClientUtil
 
-
-def processVariables(variables):
-    result = ""
-    if variables is None:
-        return result
-    else:
-        first = True
+def process_variables(variables, updatable_variables):
+    var_map = {}
+    if variables is not None:
         for variable in variables.split(','):
-            if first:
-                first = False
-            else:
-                result = result + ","
-            result = result + "{\"key\":\"${%s}\",\"value\":\"%s\",\"type\":\"DEFAULT\"}" % (variable.split('=', 1)[0], variable.split('=', 1)[1])
-    return result
+            var_map[variable.split('=', 1)[0]]= variable.split('=', 1)[1]
+
+    for updatable_variable in updatable_variables:
+        key = str(updatable_variable["key"]).strip("${").strip("}")
+        if key in var_map:
+            updatable_variable["value"] = var_map[key]
+
+    return str(updatable_variables).replace("u'","'").replace("'", '"').replace("None","null")
 
 if xlrServer is None:
     print "No server provided."
     sys.exit(1)
 
-xlrUrl = xlrServer['url']
-xlrUrl = xlrUrl.rstrip("/")
-
-credentials = CredentialsFallback(xlrServer, username, password).getCredentials()
+xlr_client = XLReleaseClientUtil.createXLReleaseClient(xlrServer, username, password)
 
 #Get Template id
-templateId = None
-tags = None
-filter = {'filter': templateName}
-xlrAPIUrl = '%s/api/v1/templates?%s' % (xlrUrl, urllib.urlencode(filter))
-xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
-if xlrResponse.status == TEMPLATES_FOUND_STATUS:
-    data = json.loads(xlrResponse.read())
-    for template in data:
-        if template["title"] == templateName:
-            templateId = template["id"]
-            tags = [str(t) for t in template["tags"]]
-            print "Found template %s with id %s" % (templateName, templateId)
-            break
-    if templateId is None:
-        print "Failed to find template in XL Release %s" % templateName
-        sys.exit(1)
-else:
-    print "Failed to find template in XL Release %s" % templateName
-    xlrResponse.errorDump()
-    sys.exit(1)
-
+template = xlr_client.get_template(templateName)
 
 # Create Release
-variables = processVariables(variables)
+updatable_variables = xlr_client.get_updatable_variables(template.id)
+vars = process_variables(variables, updatable_variables)
 if releaseDescription is None:
     releaseDescription = ""
 
-#{"owner":{"username":"admin","fullName":"XL Release Administrator"},"abortOnFailure":false,"scriptUsername":null,"scriptUserPassword":null}
-
-content = """
-{"title":"%s","description":"%s","scheduledStartDate":"%sT23:58:00.000Z","dueDate":"%sT23:59:00.000Z","plannedDuration":null,"variables":[%s],"tags":%s,"flag":{"status":"OK"},"templateId":"%s"}
-""" % (releaseTitle, releaseDescription, date.today(), date.today(), variables, repr(tags).replace("'",'"'), templateId.split("/")[1])
-
-print "Sending content %s" % content
-
-xlrAPIUrl = xlrUrl + '/releases'
-
-xlrResponse = XLRequest(xlrAPIUrl, 'POST', content, credentials['username'], credentials['password'], 'application/json').send()
-
-releaseId = None
-if xlrResponse.status == RELEASE_CREATED_STATUS:
-    data = json.loads(xlrResponse.read())
-    releaseId = data["id"]
-    print "Created %s in XLR" % (releaseId)
-else:
-    print "Failed to create release in XLR"
-    xlrResponse.errorDump()
-    sys.exit(1)
-
+release_id = xlr_client.create_release(releaseTitle, releaseDescription, vars, repr(template.tags).replace("'",'"'), template.id.split("/")[1])
 
 # Start Release
-content = """
-{}
-"""
-
-xlrAPIUrl = xlrUrl + '/releases/' + releaseId + "/start"
-xlrResponse = XLRequest(xlrAPIUrl, 'POST', content, credentials['username'], credentials['password'], 'application/json').send()
-if xlrResponse.status == RELEASE_STARTED_STATUS:
-    print "Started %s in XLR" % (releaseId)
-else:
-    print "Failed to start release in XLR"
-    xlrResponse.errorDump()
-    sys.exit(1)
-
+xlr_client.start_release(release_id)
 
 # Wait for subrelease to be finished (only if asynch is true)
-xlrAPIUrl = xlrUrl + '/releases/' + releaseId
-
 while not asynch:
-    xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
-    if xlrResponse.status == RECEIVED_RELEASE_STATUS:
-        data = json.loads(xlrResponse.read())
-        status = data["status"]
-        if status == "COMPLETED":
-            print "Subrelease %s completed in XLR" % (releaseId)
-            break
-        if status == "ABORTED":
-            print "Subrelease %s aborted in XLR" % (releaseId)
-            sys.exit(1)
-    else:
-        print "Failed to get release status in XLR"
-        xlrResponse.errorDump()
+    status = xlr_client.get_release_status(release_id)
+    if status == "COMPLETED":
+        print "Subrelease %s completed in XLR" % (release_id)
+        break
+    if status == "ABORTED":
+        print "Subrelease %s aborted in XLR" % (release_id)
         sys.exit(1)
     time.sleep(5)
+
