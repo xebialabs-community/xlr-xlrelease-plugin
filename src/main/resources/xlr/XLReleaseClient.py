@@ -37,8 +37,8 @@ class XLReleaseClient(object):
 
 
     def get_template(self, template_name):
-        filter = {'filter': template_name}
-        xlr_api_url = '/api/v1/templates?%s' % urllib.urlencode(filter)
+        xlr_api_url = '/api/v1/templates?filter=%s' % urllib.quote(template_name)
+        print "Going to use xlr_api_url: ", xlr_api_url
         xlr_response = self.httpRequest.get(xlr_api_url, contentType='application/json')
         if xlr_response.isSuccessful():
             data = json.loads(xlr_response.getResponse())
