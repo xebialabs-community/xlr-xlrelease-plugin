@@ -46,7 +46,7 @@ content = """
 xlrResponse = XLRequest(xlrAPIUrl, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
 if xlrResponse.status == TEMPLATES_FOUND_STATUS:
     data = json.loads(xlrResponse.read())
-    for template in data:
+    for template in data["cis"]:
         if template["title"] == templateName:
             print "ERROR: Template %s already exists - cannot create a duplicate" % (templateName)
             sys.exit(1)
