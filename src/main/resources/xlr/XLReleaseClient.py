@@ -111,3 +111,38 @@ class XLReleaseClient(object):
             print "Failed to get variables in XLR"
             xlr_response.errorDump()
             raise ServerError(str(xlr_response.getResponse()))
+
+    def add_new_task(self, newTaskTitle, newTaskType, containerId):
+      xlr_api_url = '/tasks/%s' % containerId
+      content = {"title":newTaskTitle,"taskType":newTaskType}
+      xlr_response = self.httpRequest.post(xlr_api_url, json.dumps(content), contentType='application/json')
+      if xlr_response.isSuccessful():
+        newTask = json.loads(xlr_response.getResponse())
+        print "Created %s\n" % newTaskTitle
+      else:
+        print "Failed to create %s\n" % newTaskTitle
+        print xlr_response.errorDump()
+        sys.exit(1)  
+      return newTask
+
+    def update_task(self, updatedTask):
+      xlr_api_url = '/tasks/%s' % updatedTask['id']
+      content = updatedTask
+      xlr_response = self.httpRequest.put(xlr_api_url, json.dumps(content), contentType='application/json')
+      if xlr_response.isSuccessful():
+        print "Updated task %s\n" % updatedTask['title']
+      else:
+        print "Failed to update task\n" % updatedTask['title']
+        print xlr_response.errorDump()
+        sys.exit(1)
+
+    def add_link(self, containerId, sourceTaskId, targetTaskId):
+      xlr_api_url = '/planning/links/%s' % containerId
+      content = {"sourceId":sourceTaskId,"targetId":targetTaskId}
+      xlr_response = self.httpRequest.post(xlr_api_url, json.dumps(content), contentType='application/json')
+      if xlr_response.isSuccessful():
+        print "Added task link\n"
+      else:
+        print "Failed to task link\n"
+        print xlr_response.errorDump()
+        sys.exit(1)
