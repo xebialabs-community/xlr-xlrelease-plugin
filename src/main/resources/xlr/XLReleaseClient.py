@@ -102,7 +102,7 @@ class XLReleaseClient(object):
             raise ServerError(str(xlr_response.getResponse()))
 
     def get_updatable_variables(self,template_id):
-        xlr_api_url = '/releases/%s/updatable-variables' % template_id.split("/")[1]
+        xlr_api_url = 'api/v1/releases/%s/variables' % template_id
         xlr_response = self.httpRequest.get(xlr_api_url, contentType='application/json')
         if xlr_response.isSuccessful():
             data = json.loads(xlr_response.getResponse())

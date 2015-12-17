@@ -20,7 +20,7 @@ def process_variables(variables, updatable_variables):
         if key in var_map:
             updatable_variable["value"] = var_map[key]
 
-    return str(updatable_variables).replace("u'","'").replace("'", '"').replace("None","null")
+    return str(updatable_variables).replace("u'","'").replace("'", '"').replace("None","null").replace("True","true").replace("False","false")
 
 if xlrServer is None:
     print "No server provided."
