@@ -11,7 +11,7 @@ The xlr-xlr-plugin is an XL Release plugin that allows you to:
   * create and start another release from an existing release. So you can create a subrelease from a parent release
   * programmatically delete phases in the current release
 
-For XL Release version 4.5.x you'll need at least version 1.5 of the plugin.
+For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
 
 ## Tasks ##
 + Create and Start SubRelease
