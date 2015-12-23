@@ -12,27 +12,28 @@
         <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
         <property name="taskColor" hidden="true" default="#AA217E" />
 
-        <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci" />
-        <property name="username" category="input" />
-        <property name="password" password="true" category="input" />
+        <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci" description="The XL Release server to connect to."/>
+        <property name="username" category="input" description="Overrides the username used to connect to the server."/>
+        <property name="password" password="true" category="input" description="Overrides the password used to connect to the server." />
     </type>
 
     <type type="xlr.CreateAndStartSubRelease" extends="xlr.XlrControlTask">
         <property name="scriptLocation" default="xlr/CreateAndStartSubRelease.py" hidden="true" />
-        <property name="templateName" category="input" label="Template Name" required="true" />
-        <property name="releaseTitle" category="input" label="Release Title" required="true" />
-        <property name="releaseDescription" category="input" label="Release Description" required="false" />
-        <property name="variables" category="input" required="false" />
-        <property name="asynch" category="input" required="false" kind="boolean" default="false" description="If [false], the task will wait for the subrelease to finish"/>
+
+        <property name="templateName" category="input" label="Template Name" required="true" description="Name of the template from which to create the subrelease."/>
+        <property name="releaseTitle" category="input" label="Release Title" required="true" description="Name of the newly created subrelease."/>
+        <property name="releaseDescription" category="input" label="Release Description" required="false" size="large" description="Description of the subrelease."/>
+        <property name="variables" category="input" required="false" description="Comma-separated key-value pairs for the values of variables required by the subrelease, e.g. var1=value1,var2=value2"/>
+        <property name="asynch" category="input" required="false" kind="boolean" default="false" description="If [false], the task will wait for the subrelease to finish."/>
 
         <property name="status" category="output" />
     </type>
 
     <type type="xlr.CreateTemplate" extends="xlr.XlrControlTask">
-       <property name="templateName" category="input" label="Template Name" required="true" />
-       <property name="tags" category="input" required="false" />
+       <property name="templateName" category="input" label="Template Name" required="true" description="Name of the template to create."/>
+       <property name="tags" category="input" required="false" description="Comma-separated list of tags to associate with this template e.g. tag1,tag2."/>
 
-       <property name="templateId" category="output" />
+       <property name="templateId" category="output" description="The ID of the created template."/>
     </type>
 
     <type type="xlr.DeletePhases" extends="xlr.XlrControlTask">
@@ -44,8 +45,8 @@
         <property name="taskColor" hidden="true" default="#AA217E" />
         <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
 
-        <property name="taskTitle" category="input" label="Task Title" required="true" />
-        <property name="taskId" category="output" />
+        <property name="taskTitle" category="input" label="Task Title" required="true" description="Title of the task to get the id for."/>
+        <property name="taskId" category="output" description="The id of the task."/>
     </type>
     
     <type type="xlr.Server" extends="configuration.HttpConnection" />
