@@ -7,9 +7,10 @@ See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index
 # Overview #
 
 The xlr-xlr-plugin is an XL Release plugin that allows you to:
-  * programmatically create a template and assign tags to it
-  * create and start another release from an existing release. So you can create a subrelease from a parent release
-  * programmatically delete phases in the current release
+
+  * Programmatically create a template and assign tags to it
+  * Create and start another release from an existing release. So you can create a subrelease from a parent release
+  * Programmatically delete phases in the current release
 
 For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
 
