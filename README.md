@@ -13,6 +13,7 @@ The xlr-xlr-plugin is an XL Release plugin that allows you to:
   * Programmatically delete phases in the current release
 
 For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
+Any XL Release version before 4.8.x should use version 1.6.5 or lower of the plugin.
 
 ## Tasks ##
 + Create and Start SubRelease
