@@ -146,3 +146,21 @@ class XLReleaseClient(object):
         print "Failed to task link\n"
         print xlr_response.errorDump()
         sys.exit(1)
+
+    def add_dependency(self, dependencyReleaseId, gateTaskId):
+        # the internal api uses a rel-phase-task format instead of Applications/Rel/Phase/Task
+        # is there a cleaner way to do this??
+        # TODO move to public API once it is possible using the public API
+        internalFormatTaskId = gateTaskId.replace('Applications/', '').replace('/', '-')
+        
+        xlr_api_url = '/gates/%s/dependencies' % internalFormatTaskId
+        content = { "target": { "releaseId" : dependencyReleaseId } }
+        xlr_response = self.httpRequest.post(xlr_api_url, json.dumps(content), contentType='application/json')
+
+        if xlr_response.isSuccessful():
+            print "Dependency added to Gate task\n"
+        else:
+            print "Failed to add dependency\n"
+            print xlr_response.errorDump()
+            sys.exit(1)
+
