@@ -6,7 +6,6 @@
 
 import sys
 import time
-import inspect
 
 from xlr.XLReleaseClientUtil import XLReleaseClientUtil
 
