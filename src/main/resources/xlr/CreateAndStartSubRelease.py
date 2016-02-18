@@ -9,6 +9,11 @@ import time
 
 from xlr.XLReleaseClientUtil import XLReleaseClientUtil
 
+def find_planned_gate_task(tasks):
+    for task in tasks:
+        if task["status"] == "PLANNED":
+            return task
+
 def process_variables(variables, updatable_variables):
     var_map = {}
     if variables is not None:
@@ -42,7 +47,7 @@ release_id = xlr_client.create_release(releaseTitle, releaseDescription, vars, r
 # Start Release
 xlr_client.start_release(release_id)
 
-# Wait for subrelease to be finished (only if asynch is true)
+# Wait for subrelease to be finished (only if asynch is false)
 while not asynch:
     status = xlr_client.get_release_status(release_id)
     if status == "COMPLETED":
@@ -52,4 +57,14 @@ while not asynch:
         print "Subrelease %s aborted in XLR" % (release_id)
         sys.exit(1)
     time.sleep(5)
+
+if gateTaskTitle:
+    tasks = taskApi.searchTasksByTitle(gateTaskTitle, None, getCurrentRelease().id)
+    task = find_planned_gate_task(tasks)
+
+    if task is None:
+        print "Couldn't find a planned gate task with title %s in current release." % gateTaskTitle
+        sys.exit(1)
+
+    xlr_client.add_dependency(release_id, task.id)    
 

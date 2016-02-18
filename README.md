@@ -22,6 +22,7 @@ Any XL Release version before 4.8.x should use version 1.6.5 or lower of the plu
   * `releaseDescription`: Description of the subrelease (`string`)
   * `variables`: Comma-separated key-value pairs for the values of variables required by the subrelease, e.g. var1=value1,var2=value2 (`string`)
   * `asynch`: If [false], the task will wait for the subrelease to finish
+  * `gateTaskTitle`: Title of the gate task in this release that should wait for the subrelease to complete. Skipped if not specified (blank).
 
 + Create Template
   * `templateName`: Name of the template to create (`string`)

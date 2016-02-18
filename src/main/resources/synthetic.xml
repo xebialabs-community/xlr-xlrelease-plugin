@@ -25,6 +25,7 @@
         <property name="releaseDescription" category="input" label="Release Description" required="false" size="large" description="Description of the subrelease."/>
         <property name="variables" category="input" required="false" description="Comma-separated key-value pairs for the values of variables required by the subrelease, e.g. var1=value1,var2=value2"/>
         <property name="asynch" category="input" required="false" kind="boolean" default="false" description="If [false], the task will wait for the subrelease to finish."/>
+        <property name="gateTaskTitle" category="input" required="false" kind="string"  description="Title of the gate task in this release that should wait for the subrelease to complete. Skipped if not specified (blank)."/>
 
         <property name="status" category="output" />
     </type>
