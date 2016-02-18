@@ -151,9 +151,9 @@ class XLReleaseClient(object):
         # the internal api uses a rel-phase-task format instead of Applications/Rel/Phase/Task
         # is there a cleaner way to do this??
         # TODO move to public API once it is possible using the public API
-        internalFormatTaskId = gateTaskId.replace('Applications/', '').replace('/', '-')
+        internal_format_task_id = gateTaskId.replace('Applications/', '').replace('/', '-')
         
-        xlr_api_url = '/gates/%s/dependencies' % internalFormatTaskId
+        xlr_api_url = '/gates/%s/dependencies' % internal_format_task_id
         content = { "target": { "releaseId" : dependencyReleaseId } }
         xlr_response = self.httpRequest.post(xlr_api_url, json.dumps(content), contentType='application/json')
 
