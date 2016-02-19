@@ -29,7 +29,7 @@ class XLTemplate(object):
 
 class XLReleaseClient(object):
     def __init__(self, http_connection, username=None, password=None):
-        self.httpRequest = HttpRequest(http_connection, username, password)
+        self.http_request = HttpRequest(http_connection, username, password)
 
     @staticmethod
     def create_client(http_connection, username=None, password=None):
@@ -39,7 +39,7 @@ class XLReleaseClient(object):
     def get_template(self, template_name):
         xlr_api_url = '/api/v1/templates?filter=%s' % urllib.quote(template_name)
         print "Going to use xlr_api_url: ", xlr_api_url
-        xlr_response = self.httpRequest.get(xlr_api_url, contentType='application/json')
+        xlr_response = self.http_request.get(xlr_api_url, contentType='application/json')
         if xlr_response.isSuccessful():
             data = json.loads(xlr_response.getResponse())
             for template in data:
@@ -59,7 +59,7 @@ class XLReleaseClient(object):
         print "Sending content %s" % content
 
         xlr_api_url = '/releases'
-        xlr_response = self.httpRequest.post(xlr_api_url, content, contentType='application/json')
+        xlr_response = self.http_request.post(xlr_api_url, content, contentType='application/json')
 
         if xlr_response.isSuccessful():
             data = json.loads(xlr_response.getResponse())
@@ -79,7 +79,7 @@ class XLReleaseClient(object):
         """
 
         xlr_api_url = '/releases/' + release_id + "/start"
-        xlr_response = self.httpRequest.post(xlr_api_url, content, contentType='application/json')
+        xlr_response = self.http_request.post(xlr_api_url, content, contentType='application/json')
         if xlr_response.isSuccessful():
             print "Started %s in XLR" % (release_id)
         else:
@@ -90,7 +90,7 @@ class XLReleaseClient(object):
 
     def get_release_status(self, release_id):
         xlr_api_url = '/releases/' + release_id
-        xlr_response = self.httpRequest.get(xlr_api_url, contentType='application/json')
+        xlr_response = self.http_request.get(xlr_api_url, contentType='application/json')
         if xlr_response.isSuccessful():
             data = json.loads(xlr_response.getResponse())
             status = data["status"]
@@ -101,9 +101,9 @@ class XLReleaseClient(object):
             xlr_response.errorDump()
             raise ServerError(str(xlr_response.getResponse()))
 
-    def get_updatable_variables(self,template_id):
+    def get_updatable_variables(self, template_id):
         xlr_api_url = 'api/v1/releases/%s/variables' % template_id
-        xlr_response = self.httpRequest.get(xlr_api_url, contentType='application/json')
+        xlr_response = self.http_request.get(xlr_api_url, contentType='application/json')
         if xlr_response.isSuccessful():
             data = json.loads(xlr_response.getResponse())
             return data
@@ -112,34 +112,34 @@ class XLReleaseClient(object):
             xlr_response.errorDump()
             raise ServerError(str(xlr_response.getResponse()))
 
-    def add_new_task(self, newTaskTitle, newTaskType, containerId):
-      xlr_api_url = '/tasks/%s' % containerId
-      content = {"title":newTaskTitle,"taskType":newTaskType}
-      xlr_response = self.httpRequest.post(xlr_api_url, json.dumps(content), contentType='application/json')
+    def add_new_task(self, new_task_title, new_task_type, container_id):
+      xlr_api_url = '/tasks/%s' % container_id
+      content = { "title" : new_task_title, "taskType" : new_task_type }
+      xlr_response = self.http_request.post(xlr_api_url, json.dumps(content), contentType='application/json')
       if xlr_response.isSuccessful():
-        newTask = json.loads(xlr_response.getResponse())
-        print "Created %s\n" % newTaskTitle
+        new_task = json.loads(xlr_response.getResponse())
+        print "Created %s\n" % new_task_title
       else:
-        print "Failed to create %s\n" % newTaskTitle
+        print "Failed to create %s\n" % new_task_title
         print xlr_response.errorDump()
         sys.exit(1)  
-      return newTask
+      return new_task
 
-    def update_task(self, updatedTask):
-      xlr_api_url = '/tasks/%s' % updatedTask['id']
-      content = updatedTask
-      xlr_response = self.httpRequest.put(xlr_api_url, json.dumps(content), contentType='application/json')
+    def update_task(self, updated_task):
+      xlr_api_url = '/tasks/%s' % updated_task['id']
+      content = updated_task
+      xlr_response = self.http_request.put(xlr_api_url, json.dumps(content), contentType='application/json')
       if xlr_response.isSuccessful():
-        print "Updated task %s\n" % updatedTask['title']
+        print "Updated task %s\n" % updated_task['title']
       else:
-        print "Failed to update task\n" % updatedTask['title']
+        print "Failed to update task\n" % updated_task['title']
         print xlr_response.errorDump()
         sys.exit(1)
 
-    def add_link(self, containerId, sourceTaskId, targetTaskId):
-      xlr_api_url = '/planning/links/%s' % containerId
-      content = {"sourceId":sourceTaskId,"targetId":targetTaskId}
-      xlr_response = self.httpRequest.post(xlr_api_url, json.dumps(content), contentType='application/json')
+    def add_link(self, container_id, source_task_id, target_task_id):
+      xlr_api_url = '/planning/links/%s' % container_id
+      content = { "sourceId" : source_task_id, "targetId" : target_task_id }
+      xlr_response = self.http_request.post(xlr_api_url, json.dumps(content), contentType='application/json')
       if xlr_response.isSuccessful():
         print "Added task link\n"
       else:
@@ -147,15 +147,15 @@ class XLReleaseClient(object):
         print xlr_response.errorDump()
         sys.exit(1)
 
-    def add_dependency(self, dependencyReleaseId, gateTaskId):
+    def add_dependency(self, dependency_release_id, gate_task_id):
         # the internal api uses a rel-phase-task format instead of Applications/Rel/Phase/Task
         # is there a cleaner way to do this??
         # TODO move to public API once it is possible using the public API
-        internal_format_task_id = gateTaskId.replace('Applications/', '').replace('/', '-')
+        internal_format_task_id = gate_task_id.replace('Applications/', '').replace('/', '-')
         
         xlr_api_url = '/gates/%s/dependencies' % internal_format_task_id
-        content = { "target": { "releaseId" : dependencyReleaseId } }
-        xlr_response = self.httpRequest.post(xlr_api_url, json.dumps(content), contentType='application/json')
+        content = { "target": { "releaseId" : dependency_release_id } }
+        xlr_response = self.http_request.post(xlr_api_url, json.dumps(content), contentType='application/json')
 
         if xlr_response.isSuccessful():
             print "Dependency added to Gate task\n"
