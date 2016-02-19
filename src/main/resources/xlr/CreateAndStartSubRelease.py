@@ -11,7 +11,7 @@ from xlr.XLReleaseClientUtil import XLReleaseClientUtil
 
 def find_planned_gate_task(tasks):
     for task in tasks:
-        if task["status"] == "PLANNED":
+        if task.getType() == "xlrelease.GateTask" and task["status"] == "PLANNED":
             return task
 
 def process_variables(variables, updatable_variables):
