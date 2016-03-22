@@ -39,7 +39,7 @@ while isRunning == True :
              #print ">>> Phase = %s" % (phase["title"])
              if phase["title"] == phaseName:
                 for task in phase["tasks"]:
-                   if task["title"] == taskName :
+                   if task["title"] == taskName or taskName == "*" :
                       print ">>>***id = %s, title = %s***" % ( task["id"], task["title"] )
                       print "   Status = %s " % ( task["status"] )
                       if task["status"] == "IN_PROGRESS" :

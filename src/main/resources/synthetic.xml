@@ -52,8 +52,8 @@
 
    <type type="xlr.WaitForBlockingTask" extends="xlr.XlrControlTask">
       <property name="scriptLocation" default="xlr/WaitForBlockingTask.py" hidden="true" />
-      <property name="phaseName" label="Phase Name to check for running task" category="input"/>
-      <property name="taskName" label="Task Name to verify is not running" category="input"/>
+      <property name="phaseName" description="Phase Name to check for running task" category="input" />
+      <property name="taskName" description="Task Name to verify is not running (* for all tasks in the phase)" category="input" default="*" />
       <property name="pollInterval" category="input" kind="integer" label="Polling Interval" required="true" default="30" />
       <property name="maxPolls"     category="input" kind="integer" label="Max Polls" required="true" default="0" />
       <property name="Results" category="output"/>
