@@ -96,5 +96,4 @@ while not asynch:
     if status == "ABORTED":
         print bcolors.FAIL + "Subrelease %s aborted in XLR" % (release_id)
         sys.exit(1)
-    time.sleep(5)
-
+    time.sleep(int(checkSubReleaseInterval))
