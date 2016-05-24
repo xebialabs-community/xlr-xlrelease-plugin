@@ -5,9 +5,11 @@
 #
 
 import urllib
+import time
 from datetime import date
 import com.xhaus.jyson.JysonCodec as json
 from httputil.HttpRequest import HttpRequest
+from threading import Thread
 
 class Error(Exception):
     """Base class for exceptions in this module."""
@@ -35,6 +37,9 @@ class XLReleaseClient(object):
     def create_client(http_connection, username=None, password=None):
         return XLReleaseClient(http_connection, username, password)
 
+    # the internal api uses a rel-phase-task format instead of Applications/Rel/Phase/Task
+    def _public_to_internal_id_style(self, id):
+        return id.replace('Applications/', '').replace('/', '-')
 
     def get_template(self, template_name):
         xlr_api_url = '/api/v1/templates?filter=%s' % urllib.quote(template_name)
@@ -148,10 +153,8 @@ class XLReleaseClient(object):
         sys.exit(1)
 
     def add_dependency(self, dependency_release_id, gate_task_id):
-        # the internal api uses a rel-phase-task format instead of Applications/Rel/Phase/Task
-        # is there a cleaner way to do this??
         # TODO move to public API once it is possible using the public API
-        internal_format_task_id = gate_task_id.replace('Applications/', '').replace('/', '-')
+        internal_format_task_id = self._public_to_internal_id_style(gate_task_id)
         
         xlr_api_url = '/gates/%s/dependencies' % internal_format_task_id
         content = { "target": { "releaseId" : dependency_release_id } }
@@ -164,3 +167,27 @@ class XLReleaseClient(object):
             print xlr_response.errorDump()
             sys.exit(1)
 
+    def restart_phase(self, release_id, from_phase_id, from_task_id):
+        print "Restarting release %s from phase %s, task %s\n" % (release_id, from_phase_id, from_task_id)
+
+        internal_from_phase_id = self._public_to_internal_id_style(from_phase_id)
+        internal_from_task_id = self._public_to_internal_id_style(from_task_id)
+        internal_release_id = self._public_to_internal_id_style(release_id)
+
+        xlr_api_url = '/releases/%s/restartPhases?fromPhaseId=%s&fromTaskId=%s' % (internal_release_id, internal_from_phase_id, internal_from_task_id)
+        content = """
+        {}
+        """
+
+        # oooohhh so ugly - to prevent Response:  You can not restart phases when an automated task is running
+        Thread(target=lambda: self._restart_phase_internal(xlr_api_url, content)).start()
+
+    def _restart_phase_internal(self, xlr_api_url, content):
+        time.sleep(1)
+
+        xlr_response = self.http_request.post(xlr_api_url, json.dumps(content), contentType='application/json')
+        if xlr_response.isSuccessful():
+            logger.info("Executed successfully")
+        else:
+            logger.error("Failed to execute!")
+            logger.error(xlr_response.errorDump())

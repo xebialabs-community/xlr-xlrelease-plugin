@@ -41,6 +41,11 @@
        <property name="phases" category="input" description="Comma-seperated list of phases to delete" />
     </type>
 
+    <type type="xlr.RestartPhase" extends="xlr.XlrControlTask">
+        <property name="fromPhaseId" category="input" required="true" description="Id of the phase to restart from" />
+        <property name="fromTaskId" category="input" required="true" description="Id of the task to start from" />
+    </type>
+
     <type type="xlr.GetTaskId" extends="xlrelease.PythonScript">
         <property name="scriptLocation" default="xlr/GetTaskId.py" hidden="true" />
         <property name="taskColor" hidden="true" default="#AA217E" />
