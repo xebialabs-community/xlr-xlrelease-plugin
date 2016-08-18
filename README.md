@@ -4,6 +4,20 @@ This document describes the functionality provided by the xlr-xlr-plugin.
 
 See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index.html)** for background information on XL Release and release concepts.
 
+# CI status #
+
+[![Build Status][xlr-xlrelease-travis-image] ][xlr-xlrelease-travis-url]
+[![Build Status][xlr-xlrelease-codacy-image] ][xlr-xlrelease-codacy-url]
+[![Build Status][xlr-xlrelease-code-climate-image] ][xlr-xlrelease-code-climate-url]
+
+
+[xlr-xlrelease-travis-image]: https://travis-ci.org/xebialabs-community/xlr-xlrelease-plugin.svg?branch=master
+[xlr-xlrelease-travis-url]: https://travis-ci.org/xebialabs-community/xlr-xlrelease-plugin
+[xlr-xlrelease-codacy-image]: https://api.codacy.com/project/badge/Grade/84c1d8ffa58648daa7e165462cdcce22
+[xlr-xlrelease-codacy-url]: https://www.codacy.com/app/rvanstone/xlr-xlrelease-plugin
+[xlr-xlrelease-code-climate-image]: https://codeclimate.com/github/xebialabs-community/xlr-xlrelease-plugin/badges/gpa.svg
+[xlr-xlrelease-code-climate-url]: https://codeclimate.com/github/xebialabs-community/xlr-xlrelease-plugin
+
 # Overview #
 
 The xlr-xlr-plugin is an XL Release plugin that allows you to:
