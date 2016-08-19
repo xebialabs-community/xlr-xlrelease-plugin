@@ -4,32 +4,30 @@
 # FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 #
 
-import sys, string, time, urllib
-import com.xhaus.jyson.JysonCodec as json
+import sys
+
+from xlr.XLReleaseClientUtil import XLReleaseClientUtil
 
 if xlrServer is None:
     print "No server provided."
     sys.exit(1)
 
-xlrUrl = xlrServer['url']
-xlrUrl = xlrUrl.rstrip("/")
 
-credentials = CredentialsFallback(xlrServer, username, password).getCredentials()
+xlr_client = XLReleaseClientUtil.create_xl_release_client(xlrServer, username, password)
+
 
 phases = phases.split(",")
 idlist = []
 
-# find any matching phase in the existing release (release.id)
-request = HttpRequest({'url': xlrUrl}, credentials['username'], credentials['password'])
-response = request.get('/releases/' + release.id.split("/")[1], contentType = 'application/json')
-
-releasedata = json.loads(response.response)
-for phaseToDelete in phases:
-    for phase in releasedata['phases']:
-        if phase['title'] == phaseToDelete:
-            idlist.append(phase['id'])
+release_phases = dict((release_phase.title,release_phase.id) for release_phase in release.phases)
+for phase in phases:
+    if phase in release_phases.keys():
+        print "Found matching phase [%s] for deletion.\n" % phase
+        idlist.append(release_phases.get(phase))
+    else:
+        print "Did not find phase with title [%s]. Failing \n" % phase
+        sys.exit(1)
 
 # Delete all relevant phases from the release
-
 for id in idlist:
-    response = request.delete('/phases/' + id, contentType = 'application/json')
+    xlr_client.delete_phase(id)

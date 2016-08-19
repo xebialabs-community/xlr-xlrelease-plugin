@@ -164,3 +164,11 @@ class XLReleaseClient(object):
             print xlr_response.errorDump()
             sys.exit(1)
 
+    def delete_phase(self, phase_id):
+        xlr_response = self.http_request.delete('/phases/%s' % phase_id, contentType = 'application/json')
+        if xlr_response.isSuccessful():
+            print "Deleted phase with id [%s]\n" % phase_id
+        else:
+            print "Failed to delete phase with id [%s]\n" % phase_id
+            print xlr_response.errorDump()
+            raise ServerError(str(xlr_response.getResponse()))

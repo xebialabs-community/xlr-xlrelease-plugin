@@ -31,7 +31,7 @@ if xlrServer is None:
     print "No server provided."
     sys.exit(1)
 
-xlr_client = XLReleaseClientUtil.createXLReleaseClient(xlrServer, username, password)
+xlr_client = XLReleaseClientUtil.create_xl_release_client(xlrServer, username, password)
 
 #Get Template id
 template = xlr_client.get_template(templateName)

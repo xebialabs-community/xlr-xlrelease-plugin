@@ -1,15 +1,19 @@
+#!/bin/sh
 #
 # THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
 # FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 #
 
-from xlr.XLReleaseClient import XLReleaseClient
+BASEDIR=$(dirname $0)
 
+####################### XLR server data
 
-class XLReleaseClientUtil(object):
+curl -u admin:admin \
+    -H "Accept: application/json" \
+    -H "Content-type: application/json" \
+    -X POST \
+    -d @$BASEDIR/data/server-configs.json \
+http://localhost:5516/repository/cis
 
-    @staticmethod
-    def create_xl_release_client(container, username, password):
-        client = XLReleaseClient.create_client(container, username, password)
-        return client
+exit 0

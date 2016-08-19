@@ -11,13 +11,15 @@
     <type type="xlr.XlrControlTask" extends="xlrelease.PythonScript" virtual="true">
         <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
         <property name="taskColor" hidden="true" default="#AA217E" />
-
-        <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci" description="The XL Release server to connect to."/>
-        <property name="username" category="input" description="Overrides the username used to connect to the server."/>
-        <property name="password" password="true" category="input" description="Overrides the password used to connect to the server." />
     </type>
 
-    <type type="xlr.CreateAndStartSubRelease" extends="xlr.XlrControlTask">
+    <type type="xlr.RemoteXlrControlTask" extends="xlr.XlrControlTask" virtual="true">
+        <property name="xlrServer" category="input" label="Server" referenced-type="xlr.Server" kind="ci" description="The XL Release server to connect to."/>
+        <property name="username" category="input" required="false" description="Overrides the username used to connect to the server."/>
+        <property name="password" password="true" required="false" category="input" description="Overrides the password used to connect to the server." />
+    </type>
+
+    <type type="xlr.CreateAndStartSubRelease" extends="xlr.RemoteXlrControlTask">
         <property name="scriptLocation" default="xlr/CreateAndStartSubRelease.py" hidden="true" />
 
         <property name="templateName" category="input" label="Template Name" required="true" description="Name of the template from which to create the subrelease."/>
@@ -30,27 +32,25 @@
         <property name="status" category="output" />
     </type>
 
-    <type type="xlr.CreateTemplate" extends="xlr.XlrControlTask">
+    <type type="xlr.CreateTemplate" extends="xlr.RemoteXlrControlTask">
        <property name="templateName" category="input" label="Template Name" required="true" description="Name of the template to create."/>
        <property name="tags" category="input" required="false" description="Comma-separated list of tags to associate with this template e.g. tag1,tag2."/>
 
        <property name="templateId" category="output" description="The ID of the created template."/>
     </type>
 
-    <type type="xlr.DeletePhases" extends="xlr.XlrControlTask">
-       <property name="phases" category="input" description="Comma-seperated list of phases to delete" />
+    <type type="xlr.DeletePhases" extends="xlr.RemoteXlrControlTask">
+       <property name="phases" category="input" required="true" description="Comma-separated list of phases to delete" />
     </type>
 
-    <type type="xlr.GetTaskId" extends="xlrelease.PythonScript">
+    <type type="xlr.GetTaskId" extends="xlr.XlrControlTask">
         <property name="scriptLocation" default="xlr/GetTaskId.py" hidden="true" />
-        <property name="taskColor" hidden="true" default="#AA217E" />
-        <property name="iconLocation" default="xlr/xlr.png" hidden="true" />
 
         <property name="taskTitle" category="input" label="Task Title" required="true" description="Title of the task to get the id for."/>
         <property name="taskId" category="output" description="The id of the task."/>
     </type>
 
-   <type type="xlr.WaitForBlockingTask" extends="xlr.XlrControlTask">
+   <type type="xlr.WaitForBlockingTask" extends="xlr.RemoteXlrControlTask">
       <property name="scriptLocation" default="xlr/WaitForBlockingTask.py" hidden="true" />
       <property name="phaseName" label="Phase Name to check for running task" category="input"/>
       <property name="taskName" label="Task Name to verify is not running" category="input"/>
