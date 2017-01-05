@@ -165,6 +165,7 @@ class XLReleaseClient(object):
             sys.exit(1)
 
     def delete_phase(self, phase_id):
+        phase_id = phase_id.replace("Applications/","").replace("/","-")
         xlr_response = self.http_request.delete('/phases/%s' % phase_id, contentType = 'application/json')
         if xlr_response.isSuccessful():
             print "Deleted phase with id [%s]\n" % phase_id

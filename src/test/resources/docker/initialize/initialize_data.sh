@@ -5,15 +5,14 @@
 # FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 #
 
-BASEDIR=$(dirname $0)
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in, thus /home/user/bin
+SCRIPTPATH=$(dirname "$SCRIPT")
 
-####################### XLR server data
+####################### UCD server data
 
-curl -u admin:admin \
-    -H "Accept: application/json" \
-    -H "Content-type: application/json" \
-    -X POST \
-    -d @$BASEDIR/data/server-configs.json \
-http://localhost:5516/repository/cis
-
-exit 0
+wget --http-user=admin --http-password=admin --auth-no-challenge \
+     --header="Accept: application/json" \
+     --header="Content-type: application/json" \
+     --post-file=$SCRIPTPATH/data/server-configs.json \
+    http://localhost:5516/repository/cis -O /dev/null

@@ -1,4 +1,4 @@
 .gradle
-build
 .idea
-xlr-xlrelease-plugin.iml
+build
+supervisord.*
