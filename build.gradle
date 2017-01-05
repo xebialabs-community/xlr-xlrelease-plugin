@@ -1,6 +1,6 @@
 plugins {
     id "com.github.hierynomus.license" version "0.13.0"
-    id "com.xebialabs.xlr.docker" version "1.1.12"
+    id "com.xebialabs.xl.docker" version "1.0.0"
 }
 
 version="1.8.0"
@@ -10,10 +10,13 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 
-xlrDocker {
-    version = '5.0.1.10'
+xlDocker {
+    compileImage = 'xebialabs/xlr_dev_compile'
+    compileVersion = 'v6.0.0.1'
+    runImage = 'xebialabs/xlr_dev_run'
+    runVersion = 'v6.0.0.1'
+    runPortMapping = '15516:5516'
 }
-
 
 license {
     header rootProject.file('src/main/license/xebialabs_community.license')
