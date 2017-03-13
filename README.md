@@ -7,8 +7,9 @@ See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index
 # CI status #
 
 [![Build Status][xlr-xlrelease-travis-image] ][xlr-xlrelease-travis-url]
-[![Build Status][xlr-xlrelease-codacy-image] ][xlr-xlrelease-codacy-url]
-[![Build Status][xlr-xlrelease-code-climate-image] ][xlr-xlrelease-code-climate-url]
+[![Codacy Status][xlr-xlrelease-codacy-image] ][xlr-xlrelease-codacy-url]
+[![Code Climate Status][xlr-xlrelease-code-climate-image] ][xlr-xlrelease-code-climate-url]
+[![License: MIT][xlr-xlrelease-plugin-license-image] ][xlr-xlrelease-plugin-license-url]
 
 
 [xlr-xlrelease-travis-image]: https://travis-ci.org/xebialabs-community/xlr-xlrelease-plugin.svg?branch=master
@@ -17,6 +18,8 @@ See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index
 [xlr-xlrelease-codacy-url]: https://www.codacy.com/app/rvanstone/xlr-xlrelease-plugin
 [xlr-xlrelease-code-climate-image]: https://codeclimate.com/github/xebialabs-community/xlr-xlrelease-plugin/badges/gpa.svg
 [xlr-xlrelease-code-climate-url]: https://codeclimate.com/github/xebialabs-community/xlr-xlrelease-plugin
+[xlr-xlrelease-plugin-license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
+[xlr-xlrelease-plugin-license-url]: https://opensource.org/licenses/MIT
 
 # Overview #
 

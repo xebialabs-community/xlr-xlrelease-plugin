@@ -1,5 +1,5 @@
 plugins {
-    id "com.github.hierynomus.license" version "0.13.0"
+    id "com.github.hierynomus.license" version "0.13.1"
     id "com.xebialabs.xl.docker" version "1.0.0"
 }
 
@@ -19,6 +19,6 @@ xlDocker {
 }
 
 license {
-    header rootProject.file('src/main/license/xebialabs_community.license')
+    header rootProject.file('License.md')
     strictCheck true
 }
