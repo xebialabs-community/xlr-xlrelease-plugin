@@ -1,18 +1,9 @@
 plugins {
-    id "com.github.hierynomus.license" version "0.13.1"
-    id "com.xebialabs.xlr.docker" version "1.1.12"
+  id "com.github.hierynomus.license" version "0.13.1"
+  id "com.xebialabs.xl.docker" version "1.0.0"
 }
 
-xlrDocker {
-    version = 'v6.1.0.1'
-    download("xlr_community_plugins") {
-        src(["https://github.com/xebialabs-community/xlr-xlrelease-plugin/releases/download/v1.7.2/xlr-xlrelease-plugin-1.7.2.jar"])
-        dest file("src/downloads/plugins/xlr-xlrelease-plugin-1.7.2.jar")
-        acceptAnyCertificate true
-    }
-}
-
-version="1.9.0"
+version="1.10.0"
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -20,14 +11,14 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 xlDocker {
-    compileImage = 'xebialabs/xlr_dev_compile'
-    compileVersion = 'v6.1.0.1'
-    runImage = 'xebialabs/xlr_dev_run'
-    runVersion = 'v6.1.0.1'
-    runPortMapping = '15516:5516'
+  compileImage = 'xebialabs/xlr_dev_compile'
+  compileVersion = 'v6.1.0.1'
+  runImage = 'xebialabs/xlr_dev_run'
+  runVersion = 'v6.1.0.1'
+  runPortMapping = '15516:5516'
 }
 
 license {
-    header rootProject.file('License.md')
-    strictCheck true
+  header rootProject.file('License.md')
+  strictCheck true
 }

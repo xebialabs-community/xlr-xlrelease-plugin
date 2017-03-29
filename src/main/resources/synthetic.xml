@@ -1,9 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!--
 
-    THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
-    FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
     Copyright 2017 XEBIALABS
 
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -13,9 +10,11 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 -->
+
+
 <synthetic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic.xsd"
-           xmlns="http://www.xebialabs.com/deployit/synthetic">
+           xmlns="http://www.xebialabs.com/deployit/synthetic"
+           xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd">
 
     <type type="xlr.XlrControlTask" extends="xlrelease.PythonScript" virtual="true">
         <property name="iconLocation" default="xlr/xlr.png" hidden="true"/>
@@ -83,14 +82,14 @@
       <property name="Results" category="output"/>
     </type>
 
-   <type type="xlr.GetTags" extends="xlrelease.PythonScript">
+   <type type="xlr.GetTags" extends="xlr.XlrControlTask">
       <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
       <property name="taskColor"      default="#AA217E"        hidden="true" />
       <property name="scriptLocation" default="xlr/GetTags.py" hidden="true" />
       <property name="tags" category="output" kind="list_of_string" />
    </type>
 
-   <type type="xlr.AddTag" extends="xlrelease.PythonScript">
+   <type type="xlr.AddTag" extends="xlr.XlrControlTask">
       <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
       <property name="taskColor"      default="#AA217E"        hidden="true" />
       <property name="scriptLocation" default="xlr/AddTag.py" hidden="true" />
@@ -98,23 +97,13 @@
       <property name="tags"   category="output" kind="list_of_string" />
    </type>
 
-   <type type="xlr.SetTags" extends="xlrelease.PythonScript">
+   <type type="xlr.SetTags" extends="xlr.XlrControlTask">
       <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
       <property name="taskColor"      default="#AA217E"        hidden="true" />
       <property name="scriptLocation" default="xlr/SetTags.py" hidden="true" />
       <property name="newTags" category="input"  kind="list_of_string" />
       <property name="tags"    category="output" kind="list_of_string" />
    </type>
-
-    <type type="xlr.WaitForBlockingTask" extends="xlr.RemoteXlrControlTask">
-        <property name="scriptLocation" default="xlr/WaitForBlockingTask.py" hidden="true"/>
-        <property name="phaseName" label="Phase Name to check for running task" category="input"/>
-        <property name="taskName" label="Task Name to verify is not running" category="input"/>
-        <property name="pollInterval" category="input" kind="integer" label="Polling Interval" required="true"
-                  default="30"/>
-        <property name="maxPolls" category="input" kind="integer" label="Max Polls" required="true" default="0"/>
-        <property name="Results" category="output"/>
-    </type>
 
     <type type="xlr.Server" extends="configuration.HttpConnection"/>
 </synthetic>
