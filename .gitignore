@@ -2,3 +2,5 @@
 build
 .idea
 xlr-xlrelease-plugin.iml
+src/downloads/*
+supervisord.*

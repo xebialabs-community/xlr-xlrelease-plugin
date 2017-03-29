@@ -35,3 +35,21 @@ Any XL Release version before 4.8.x should use version 1.6.5 or lower of the plu
 + Get Task ID
   *  `taskTitle`: Title of the task to get the id for (`string`)
   * **This task requires XL Release 4.5.0 or higher**
+
++ Get Tags
+  * `tags`: A List of the current tags for the release
+
+  ![GetTags](images/GetTags.png)
+  
++ Add Tag
+  * `newTag`: New tag to add to the list of tags for the release
+  * `tags`: A List of the current tags for the release
+
+  ![AddTag](images/AddTag.png)
+  
++ Set Tags
+  * `newTags`: A List of tags to replace the tag list with
+  * `tags`: A list of the curretn tags for the release
+
+  ![SetTags](images/SetTags.png)
+  

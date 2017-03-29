@@ -58,6 +58,29 @@
       <property name="maxPolls"     category="input" kind="integer" label="Max Polls" required="true" default="0" />
       <property name="Results" category="output"/>
     </type>
-    
-    <type type="xlr.Server" extends="configuration.HttpConnection" />
+
+   <type type="xlr.GetTags" extends="xlrelease.PythonScript">
+      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
+      <property name="taskColor"      default="#AA217E"        hidden="true" />
+      <property name="scriptLocation" default="xlr/GetTags.py" hidden="true" />
+      <property name="tags" category="output" kind="list_of_string" />
+   </type>
+
+   <type type="xlr.AddTag" extends="xlrelease.PythonScript">
+      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
+      <property name="taskColor"      default="#AA217E"        hidden="true" />
+      <property name="scriptLocation" default="xlr/AddTag.py" hidden="true" />
+      <property name="newTag" category="input"  kind="string" />
+      <property name="tags"   category="output" kind="list_of_string" />
+   </type>
+
+   <type type="xlr.SetTags" extends="xlrelease.PythonScript">
+      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
+      <property name="taskColor"      default="#AA217E"        hidden="true" />
+      <property name="scriptLocation" default="xlr/SetTags.py" hidden="true" />
+      <property name="newTags" category="input"  kind="list_of_string" />
+      <property name="tags"    category="output" kind="list_of_string" />
+   </type>
+
+   <type type="xlr.Server" extends="configuration.HttpConnection" />
 </synthetic>
