@@ -1,3 +1,4 @@
+#!/bin/sh
 #
 # Copyright 2017 XEBIALABS
 #
@@ -9,8 +10,14 @@
 #
 
 
-currentRelease = getCurrentRelease()
+SCRIPT=$(readlink -f "$0")
+# Absolute path this script is in, thus /home/user/bin
+SCRIPTPATH=$(dirname "$SCRIPT")
 
-tags = currentRelease.tags
+####################### UCD server data
 
-sys.exit(0)
+wget --http-user=admin --http-password=admin --auth-no-challenge \
+     --header="Accept: application/json" \
+     --header="Content-type: application/json" \
+     --post-file=$SCRIPTPATH/data/server-configs.json \
+    http://localhost:5516/repository/cis -O /dev/null

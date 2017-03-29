@@ -1,35 +1,39 @@
 #
-# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
-# FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+# Copyright 2017 XEBIALABS
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-import sys, string, time, urllib
-import com.xhaus.jyson.JysonCodec as json
+
+from xlr.XLReleaseClientUtil import XLReleaseClientUtil
 
 if xlrServer is None:
-    print "No server provided."
-    sys.exit(1)
+    raise Exception("No server provided.")
 
-xlrUrl = xlrServer['url']
-xlrUrl = xlrUrl.rstrip("/")
+if phases is None and len(phasesToDelete) == 0:
+    raise Exception("At least one of \"phases (deprecated)\" or \"phases\" should have a value")
 
-credentials = CredentialsFallback(xlrServer, username, password).getCredentials()
+xlr_client = XLReleaseClientUtil.create_xl_release_client(xlrServer, username, password)
 
-phases = phases.split(",")
-idlist = []
+phases_to_delete = []
+if len(phasesToDelete) > 0:
+    phases_to_delete = phasesToDelete
+else:
+    phases_to_delete = phases.split(",")
 
-# find any matching phase in the existing release (release.id)
-request = HttpRequest({'url': xlrUrl}, credentials['username'], credentials['password'])
-response = request.get('/releases/' + release.id.split("/")[1], contentType = 'application/json')
-
-releasedata = json.loads(response.response)
-for phaseToDelete in phases:
-    for phase in releasedata['phases']:
-        if phase['title'] == phaseToDelete:
-            idlist.append(phase['id'])
+id_list = []
+release_phases = dict((release_phase.title, release_phase.id) for release_phase in release.phases)
+for phase in phases_to_delete:
+    if phase in release_phases.keys():
+        print "Found matching phase [%s] for deletion.\n" % phase
+        id_list.append(release_phases.get(phase))
+    else:
+        raise Exception("Did not find phase with title [%s]. Failing \n" % phase)
 
 # Delete all relevant phases from the release
-
-for id in idlist:
-    response = request.delete('/phases/' + id, contentType = 'application/json')
+for id in id_list:
+    xlr_client.delete_phase(id)

@@ -1,6 +1,6 @@
 .gradle
-build
 .idea
 xlr-xlrelease-plugin.iml
 src/downloads/*
+build
 supervisord.*

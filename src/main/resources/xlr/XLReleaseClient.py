@@ -1,8 +1,13 @@
 #
-# THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS
-# FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
+# Copyright 2017 XEBIALABS
 #
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
 
 import urllib
 from datetime import date
@@ -164,3 +169,12 @@ class XLReleaseClient(object):
             print xlr_response.errorDump()
             sys.exit(1)
 
+    def delete_phase(self, phase_id):
+        phase_id = phase_id.replace("Applications/","").replace("/","-")
+        xlr_response = self.http_request.delete('/phases/%s' % phase_id, contentType = 'application/json')
+        if xlr_response.isSuccessful():
+            print "Deleted phase with id [%s]\n" % phase_id
+        else:
+            print "Failed to delete phase with id [%s]\n" % phase_id
+            print xlr_response.errorDump()
+            raise ServerError(str(xlr_response.getResponse()))
