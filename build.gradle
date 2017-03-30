@@ -19,6 +19,6 @@ xlDocker {
 }
 
 license {
-  header rootProject.file('License.md')
-  strictCheck true
+    header rootProject.file('License.md')
+    strictCheck true
 }
