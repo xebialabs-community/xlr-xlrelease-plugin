@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # Copyright 2017 XEBIALABS
 #
@@ -9,14 +8,13 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-SCRIPT=$(readlink -f "$0")
-# Absolute path this script is in, thus /home/user/bin
-SCRIPTPATH=$(dirname "$SCRIPT")
 
-####################### UCD server data
+currentRelease = getCurrentRelease()
 
-wget --http-user=admin --http-password=admin --auth-no-challenge \
-     --header="Accept: application/json" \
-     --header="Content-type: application/json" \
-     --post-file=$SCRIPTPATH/data/server-configs.json \
-    http://localhost:5516/repository/cis -O /dev/null
+tags = currentRelease.tags
+tags = newTags
+
+currentRelease.tags = tags
+releaseApi.updateRelease( currentRelease )
+
+sys.exit(0)

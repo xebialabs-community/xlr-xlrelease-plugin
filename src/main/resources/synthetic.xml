@@ -71,15 +71,38 @@
         <property name="taskId" category="output" description="The id of the task."/>
     </type>
 
-    <type type="xlr.WaitForBlockingTask" extends="xlr.RemoteXlrControlTask">
-        <property name="scriptLocation" default="xlr/WaitForBlockingTask.py" hidden="true"/>
-        <property name="phaseName" label="Phase Name to check for running task" category="input"/>
-        <property name="taskName" label="Task Name to verify is not running" category="input"/>
-        <property name="pollInterval" category="input" kind="integer" label="Polling Interval" required="true"
-                  default="30"/>
-        <property name="maxPolls" category="input" kind="integer" label="Max Polls" required="true" default="0"/>
-        <property name="Results" category="output"/>
-    </type>
+   <type type="xlr.WaitForBlockingTask" extends="xlr.RemoteXlrControlTask">
+      <property name="scriptLocation" default="xlr/WaitForBlockingTask.py" hidden="true"/>
+      <property name="phaseName" label="Phase Name to check for running task" category="input"/>
+      <property name="taskName" label="Task Name to verify is not running" category="input"/>
+      <property name="pollInterval" category="input" kind="integer" label="Polling Interval" required="true"
+                default="30"/>
+      <property name="maxPolls" category="input" kind="integer" label="Max Polls" required="true" default="0"/>
+      <property name="Results" category="output"/>
+   </type>
+
+   <type type="xlr.GetTags" extends="xlr.XlrControlTask">
+      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
+      <property name="taskColor"      default="#AA217E"        hidden="true" />
+      <property name="scriptLocation" default="xlr/GetTags.py" hidden="true" />
+      <property name="tags" category="output" kind="list_of_string" />
+   </type>
+
+   <type type="xlr.AddTag" extends="xlr.XlrControlTask">
+      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
+      <property name="taskColor"      default="#AA217E"        hidden="true" />
+      <property name="scriptLocation" default="xlr/AddTag.py" hidden="true" />
+      <property name="newTag" category="input"  kind="string" />
+      <property name="tags"   category="output" kind="list_of_string" />
+   </type>
+
+   <type type="xlr.SetTags" extends="xlr.XlrControlTask">
+      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
+      <property name="taskColor"      default="#AA217E"        hidden="true" />
+      <property name="scriptLocation" default="xlr/SetTags.py" hidden="true" />
+      <property name="newTags" category="input"  kind="list_of_string" />
+      <property name="tags"    category="output" kind="list_of_string" />
+   </type>
 
     <type type="xlr.Server" extends="configuration.HttpConnection"/>
 </synthetic>
