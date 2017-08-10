@@ -104,5 +104,21 @@
       <property name="tags"    category="output" kind="list_of_string" />
    </type>
 
+    <type type="xlr.addXLDTask" extends="xlr.RemoteXlrControlTask">
+        <property name="scriptLocation" default="xlr/CreateTaskInOtherRelease.py" hidden="true"/>
+        <property name="releaseName" category="input" label="Release Name" required="true"
+                  description="Name of the release to create the task."/>
+        <property name="phaseName" category="input" label="Phase Name" required="true"
+                  description="Name of the phase to create the task."/>
+        <property name="taskTitle" category="input" label="Task Title" required="true"
+                  description="Title for the teask to be created."/>
+        <property name="xldServer" category="input" label="Server" referenced-type="xldeploy.XLDeployServer"
+                  kind="ci" description="XL Deploy server to connect to."/>
+        <property name="deploymentPackage" category="input" label="Package" description="Version of the application to be deployed. Auto-complete is supported in this field."/>
+        <property name="deploymentEnvironment" category="input" label="Environment" description="Environment to deploy to. Auto-complete is supported in this field."/>
+        <property name="rollbackOnFailure" required="false" default="true" category="input" kind="boolean" label="Rollback on Failure" description="Rollback on failure controls whether or not the task is rolled back."/>
+
+    </type>
+
     <type type="xlr.Server" extends="configuration.HttpConnection"/>
 </synthetic>
