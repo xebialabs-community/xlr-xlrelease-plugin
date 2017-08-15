@@ -104,7 +104,7 @@
       <property name="tags"    category="output" kind="list_of_string" />
    </type>
 
-    <type type="xlr.addXLDTask" extends="xlr.RemoteXlrControlTask">
+    <type type="xlr.addXLDTask" label="Add XL Deploy task" extends="xlr.RemoteXlrControlTask">
         <property name="scriptLocation" default="xlr/CreateTaskInOtherRelease.py" hidden="true"/>
         <property name="releaseName" category="input" label="Release Name" required="true"
                   description="Name of the release to create the task."/>
