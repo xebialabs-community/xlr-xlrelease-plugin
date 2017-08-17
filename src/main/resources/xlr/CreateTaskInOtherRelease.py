@@ -22,7 +22,14 @@ xlr_url = xlr_url.rstrip("/")
 credentials = CredentialsFallback(xlrServer, username, password).getCredentials()
 
 target_release = releaseApi.searchReleasesByTitle(releaseName)
+if not target_release:
+    print "No release found with name %s." % (releaseName)
+    sys.exit(1)
+
 target_phase = phaseApi.searchPhasesByTitle(phaseName, target_release[0].id)
+if not target_phase:
+    print "No phase found with name %s." % (phaseName)
+    sys.exit(1)
 
 xlr_api_url = xlr_url + '/api/v1/tasks/' + target_phase[0].id + '/tasks'
 xld_server_url = xlr_url + '/api/v1/config/byTypeAndTitle?configurationType=xldeploy.XLDeployServer&title=' + xldServer['title']
