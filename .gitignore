@@ -4,3 +4,4 @@ xlr-xlrelease-plugin.iml
 src/downloads/*
 build
 supervisord.*
+*.DS_Store

@@ -16,20 +16,20 @@ if xlrServer is None:
     print "No server provided."
     sys.exit(1)
 
-xlrUrl = xlrServer['url']
-xlrUrl = xlrUrl.rstrip("/")
+xlr_url = xlrServer['url']
+xlr_url = xlr_url.rstrip("/")
 
 credentials = CredentialsFallback(xlrServer, username, password).getCredentials()
 
 target_release = releaseApi.searchReleasesByTitle(releaseName)
 target_phase = phaseApi.searchPhasesByTitle(phaseName, target_release[0].id)
 
-xlrAPIUrl = xlrUrl + '/api/v1/tasks/' + target_phase[0].id + '/tasks'
-xld_server_url = xlrUrl + '/api/v1/config/byTypeAndTitle?configurationType=xldeploy.XLDeployServer&title=' + xldServer['title']
+xlr_api_url = xlr_url + '/api/v1/tasks/' + target_phase[0].id + '/tasks'
+xld_server_url = xlr_url + '/api/v1/config/byTypeAndTitle?configurationType=xldeploy.XLDeployServer&title=' + xldServer['title']
 
-xld_server_response = XLRequest(xld_server_url, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
+xlr_server_response = XLRequest(xld_server_url, 'GET', None, credentials['username'], credentials['password'], 'application/json').send()
 
-xld_server_data = json.loads(xld_server_response.read())
+xlr_server_data = json.loads(xlr_server_response.read())
 
 content = {
     "id":"null",
@@ -37,7 +37,7 @@ content = {
     "pythonScript": {
         "type": "xldeploy.Deploy",
         "id": "null",
-        "server": xld_server_data[0],
+        "server": xlr_server_data[0],
         "deploymentPackage":deploymentPackage,
         "deploymentEnvironment":deploymentEnvironment,
         "rollbackOnFailure": rollbackOnFailure
@@ -45,7 +45,7 @@ content = {
     "title": taskTitle
 }
 
-xlr_response = XLRequest(xlrAPIUrl, 'POST', json.dumps(content), credentials['username'], credentials['password'], 'application/json').send()
+xlr_response = XLRequest(xlr_api_url, 'POST', json.dumps(content), credentials['username'], credentials['password'], 'application/json').send()
 
 if xlr_response.status == TASK_CREATED_STATUS:
     data = json.loads(xlr_response.read())
