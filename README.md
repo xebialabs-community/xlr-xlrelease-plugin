@@ -71,3 +71,14 @@ For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
 
   ![SetTags](images/SetTags.png)
   
++ Add XL Deploy task
+  * `releaseName`: Name of the release where XL deploy task needs to be added
+  * `phaseName`: Name of the phase, task will be added at the bottom of the phase
+  * `taskTitle`: Title of the task to be created
+  * `xldServer`: XL deploy server to be used
+  * `deploymentPackage`: Version of the application to be deployed.
+  * `deploymentEnvironment`: Environment to deploy to.
+  * `rollbackOnFailure`: Rollback on failure controls whether or not the task is rolled back.
+
+  ![SetTags](images/add-xl-deploy-task.png)
+  
