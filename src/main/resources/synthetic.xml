@@ -104,6 +104,14 @@
       <property name="tags"    category="output" kind="list_of_string" />
    </type>
 
+   <type type="xlr.AddAndRemoveTags" extends="xlr.XlrControlTask">
+      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
+      <property name="taskColor"      default="#AA217E"        hidden="true" />
+      <property name="scriptLocation" default="xlr/AddAndRemoveTags.py" hidden="true" />
+      <property name="tagsToRemove" kind="list_of_string" category="input" required="false" description="List of tags to remove from this release"/>
+      <property name="tagsToAdd" kind="list_of_string" category="input" required="false" description="List of tags to add to this release"/>
+   </type>
+
     <type type="xlr.addXLDTask" label="Add XL Deploy task" extends="xlr.RemoteXlrControlTask">
         <property name="scriptLocation" default="xlr/CreateTaskInOtherRelease.py" hidden="true"/>
         <property name="releaseName" category="input" label="Release Name" required="true"

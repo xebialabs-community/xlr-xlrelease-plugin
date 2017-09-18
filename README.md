@@ -67,10 +67,16 @@ For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
   
 + Set Tags
   * `newTags`: A List of tags to replace the tag list with
-  * `tags`: A list of the curretn tags for the release
+  * `tags`: A list of the current tags for the release
 
   ![SetTags](images/SetTags.png)
   
++ Add And Remove Tags
+  * `tagsToRemove`: A list of tags to remove from the release
+  * `tagsToAdd`: A list of tags to add to the release
+
+  ![AddAndRemoveTags](images/AddAndRemoveTags.png)
+
 + Add XL Deploy task
   * `releaseName`: Name of the release where XL deploy task needs to be added
   * `phaseName`: Name of the phase, task will be added at the bottom of the phase
