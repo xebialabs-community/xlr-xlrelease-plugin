@@ -1,5 +1,7 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
-  id "com.github.hierynomus.license" version "0.13.1"
+  id "com.github.hierynomus.license" version "0.14.0"
   id "com.xebialabs.xl.docker" version "1.0.0"
 }
 
@@ -16,6 +18,13 @@ xlDocker {
   runImage = 'xebialabs/xlr_dev_run'
   runVersion = 'v6.1.0.1'
   runPortMapping = '15516:5516'
+}
+
+processResources.configure {
+  filter ReplaceTokens, tokens: [
+    'project.version': version.toString(),
+    'project.name'   : rootProject.name
+  ]
 }
 
 license {

@@ -1,10 +1,4 @@
-# Preface #
-
-This document describes the functionality provided by the xlr-xlrelease-plugin.
-
-See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index.html)** for background information on XL Release and release concepts.
-
-# CI status #
+# XL Release XL Release plugin
 
 [![Build Status][xlr-xlrelease-travis-image] ][xlr-xlrelease-travis-url]
 [![Codacy Status][xlr-xlrelease-codacy-image] ][xlr-xlrelease-codacy-url]
@@ -21,7 +15,14 @@ See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index
 [xlr-xlrelease-plugin-license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
 [xlr-xlrelease-plugin-license-url]: https://opensource.org/licenses/MIT
 
-# Overview #
+## Preface
+
+This document describes the functionality provided by the xlr-xlrelease-plugin.
+
+See the **[XL Release Documentation](https://docs.xebialabs.com/xl-release/index.html)** for background information on XL Release and release concepts.
+
+
+## Overview
 
 The xlr-xlrelease-plugin is an XL Release plugin that allows you to:
 
@@ -31,6 +32,14 @@ The xlr-xlrelease-plugin is an XL Release plugin that allows you to:
 
 For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
 
+## Requirements
+
+* XL Release 5.0+
+
+## Installation
+
+* Copy the latest JAR file from the [releases page](https://github.com/xebialabs-community/xlr-xlrelease-plugin/releases) into the `XL_RELEASE_SERVER/plugins` directory.
+* Restart the XL Release server.
 
 ## Tasks ##
 + Create and Start SubRelease
