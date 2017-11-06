@@ -47,7 +47,7 @@ vars = process_variables(variables, updatable_variables)
 if releaseDescription is None:
     releaseDescription = ""
 
-release_id = xlr_client.create_release(releaseTitle, releaseDescription, vars, repr(template.tags).replace("'",'"'), template.id.split("/")[1])
+release_id = xlr_client.create_release(releaseTitle, releaseDescription, vars, repr(template.tags).replace("'",'"'), template.id.split("/", 1)[1])
 
 # Start Release
 xlr_client.start_release(release_id)
