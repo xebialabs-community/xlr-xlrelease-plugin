@@ -98,7 +98,7 @@
       <property name="tags"    category="output" kind="list_of_string" />
    </type>
 
-   <type type="xlr.AddAndRemoveTags" label="XL Release: Add or Remove Tags"extends="xlr.XlrControlTask">
+   <type type="xlr.AddAndRemoveTags" label="XL Release: Add or Remove Tags" extends="xlr.XlrControlTask">
       <property name="scriptLocation" default="xlr/AddAndRemoveTags.py" hidden="true" />
       <property name="tagsToRemove" kind="list_of_string" category="input" required="false" description="List of tags to remove from this release"/>
       <property name="tagsToAdd" kind="list_of_string" category="input" required="false" description="List of tags to add to this release"/>
