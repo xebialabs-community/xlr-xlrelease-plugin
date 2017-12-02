@@ -2,10 +2,10 @@ import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
   id "com.github.hierynomus.license" version "0.14.0"
-  id "com.xebialabs.xl.docker" version "1.0.0"
+  id "com.xebialabs.xl.docker" version "1.1.0"
+  id 'nebula.release' version '6.0.0'
+  id "com.github.hierynomus.jython" version "0.8.0"
 }
-
-version="1.12.1"
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -14,10 +14,22 @@ apply plugin: 'maven'
 
 xlDocker {
   compileImage = 'xebialabs/xlr_dev_compile'
-  compileVersion = 'v6.1.0.1'
+  compileVersion = 'v7.2.0.2'
   runImage = 'xebialabs/xlr_dev_run'
-  runVersion = 'v6.1.0.1'
+  runVersion = 'v7.2.0.1'
   runPortMapping = '15516:5516'
+}
+
+if (!project.hasProperty('release.scope')) {
+  project.ext['release.scope'] = 'patch'
+}
+
+if (!project.hasProperty('release.useLastTag')) {
+  project.ext['release.useLastTag'] = true
+}
+
+dependencies {
+  jython ":requests:2.11.1"
 }
 
 processResources.configure {
@@ -28,6 +40,9 @@ processResources.configure {
 }
 
 license {
-    header rootProject.file('License.md')
-    strictCheck true
+  header rootProject.file('License.md')
+  strictCheck false
+  ext.year = Calendar.getInstance().get(Calendar.YEAR)
+  ext.name = 'XEBIALABS'
+  excludes(["**/requests/**/*.py"])
 }

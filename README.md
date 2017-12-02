@@ -4,6 +4,7 @@
 [![Codacy Status][xlr-xlrelease-codacy-image] ][xlr-xlrelease-codacy-url]
 [![Code Climate Status][xlr-xlrelease-code-climate-image] ][xlr-xlrelease-code-climate-url]
 [![License: MIT][xlr-xlrelease-plugin-license-image] ][xlr-xlrelease-plugin-license-url]
+![Github All Releases][xlr-xlrelease-plugin-downloads-image]
 
 
 [xlr-xlrelease-travis-image]: https://travis-ci.org/xebialabs-community/xlr-xlrelease-plugin.svg?branch=master
@@ -14,6 +15,7 @@
 [xlr-xlrelease-code-climate-url]: https://codeclimate.com/github/xebialabs-community/xlr-xlrelease-plugin
 [xlr-xlrelease-plugin-license-image]: https://img.shields.io/badge/License-MIT-yellow.svg
 [xlr-xlrelease-plugin-license-url]: https://opensource.org/licenses/MIT
+[xlr-xlrelease-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xlr-xlrelease-plugin/total.svg
 
 ## Preface
 
@@ -34,7 +36,7 @@ For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
 
 ## Requirements
 
-* XL Release 5.0+
+* XL Release 6.0+
 
 ## Installation
 

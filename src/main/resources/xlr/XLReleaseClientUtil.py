@@ -15,6 +15,6 @@ from xlr.XLReleaseClient import XLReleaseClient
 class XLReleaseClientUtil(object):
 
     @staticmethod
-    def create_xl_release_client(container, username, password):
+    def create_xl_release_client(container, username=None, password=None):
         client = XLReleaseClient.create_client(container, username, password)
         return client
