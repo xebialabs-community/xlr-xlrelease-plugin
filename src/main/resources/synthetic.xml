@@ -28,7 +28,7 @@
                   description="Overrides the password used to connect to the server."/>
     </type>
 
-    <type type="xlr.CreateAndStartSubRelease" extends="xlr.RemoteXlrControlTask">
+    <type type="xlr.CreateAndStartSubRelease" label="XL Release: Sub Release" extends="xlr.RemoteXlrControlTask">
         <property name="scriptLocation" default="xlr/CreateAndStartSubRelease.py" hidden="true"/>
 
         <property name="templateName" category="input" label="Template Name" required="true"
@@ -47,7 +47,7 @@
         <property name="status" category="output"/>
     </type>
 
-    <type type="xlr.CreateTemplate" extends="xlr.RemoteXlrControlTask">
+    <type type="xlr.CreateTemplate" label="XL Release: Create Template" extends="xlr.RemoteXlrControlTask">
         <property name="templateName" category="input" label="Template Name" required="true"
                   description="Name of the template to create."/>
         <property name="tags" category="input" required="false"
@@ -56,14 +56,14 @@
         <property name="templateId" category="output" description="The ID of the created template."/>
     </type>
 
-    <type type="xlr.DeletePhases" extends="xlr.RemoteXlrControlTask">
+    <type type="xlr.DeletePhases" label="XL Release: Delete Phases" extends="xlr.RemoteXlrControlTask">
         <property name="phases" category="input" required="false" label="phases (deprecated)"
                   description="Comma-separated list of phases to delete - deprecated."/>
         <property name="phasesToDelete" category="input" required="false" label="phases" kind="set_of_string"
                   description="Phases to delete"/>
     </type>
 
-    <type type="xlr.GetTaskId" extends="xlr.XlrControlTask">
+    <type type="xlr.GetTaskId" label="XL Release: Get Task ID" extends="xlr.XlrControlTask">
         <property name="scriptLocation" default="xlr/GetTaskId.py" hidden="true"/>
 
         <property name="taskTitle" category="input" label="Task Title" required="true"
@@ -71,7 +71,7 @@
         <property name="taskId" category="output" description="The id of the task."/>
     </type>
 
-   <type type="xlr.WaitForBlockingTask" extends="xlr.RemoteXlrControlTask">
+   <type type="xlr.WaitForBlockingTask" label="XL Release: Wait for Blocking Task" extends="xlr.RemoteXlrControlTask">
       <property name="scriptLocation" default="xlr/WaitForBlockingTask.py" hidden="true"/>
       <property name="phaseName" label="Phase Name to check for running task" category="input"/>
       <property name="taskName" label="Task Name to verify is not running" category="input"/>
@@ -81,38 +81,30 @@
       <property name="Results" category="output"/>
    </type>
 
-   <type type="xlr.GetTags" extends="xlr.XlrControlTask">
-      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
-      <property name="taskColor"      default="#AA217E"        hidden="true" />
+   <type type="xlr.GetTags" label="XL Release: Get Tags" extends="xlr.XlrControlTask">
       <property name="scriptLocation" default="xlr/GetTags.py" hidden="true" />
       <property name="tags" category="output" kind="list_of_string" />
    </type>
 
-   <type type="xlr.AddTag" extends="xlr.XlrControlTask">
-      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
-      <property name="taskColor"      default="#AA217E"        hidden="true" />
+   <type type="xlr.AddTag" label="XL Release: Add Tags" extends="xlr.XlrControlTask">
       <property name="scriptLocation" default="xlr/AddTag.py" hidden="true" />
       <property name="newTag" category="input"  kind="string" />
       <property name="tags"   category="output" kind="list_of_string" />
    </type>
 
-   <type type="xlr.SetTags" extends="xlr.XlrControlTask">
-      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
-      <property name="taskColor"      default="#AA217E"        hidden="true" />
+   <type type="xlr.SetTags" label="XL Release: Set Tags" extends="xlr.XlrControlTask">
       <property name="scriptLocation" default="xlr/SetTags.py" hidden="true" />
       <property name="newTags" category="input"  kind="list_of_string" />
       <property name="tags"    category="output" kind="list_of_string" />
    </type>
 
-   <type type="xlr.AddAndRemoveTags" extends="xlr.XlrControlTask">
-      <property name="iconLocation"   default="xlr/xlr.png"    hidden="true" />
-      <property name="taskColor"      default="#AA217E"        hidden="true" />
+   <type type="xlr.AddAndRemoveTags" label="XL Release: Add or Remove Tags"extends="xlr.XlrControlTask">
       <property name="scriptLocation" default="xlr/AddAndRemoveTags.py" hidden="true" />
       <property name="tagsToRemove" kind="list_of_string" category="input" required="false" description="List of tags to remove from this release"/>
       <property name="tagsToAdd" kind="list_of_string" category="input" required="false" description="List of tags to add to this release"/>
    </type>
 
-    <type type="xlr.addXLDTask" label="Add XL Deploy task" extends="xlr.RemoteXlrControlTask">
+    <type type="xlr.addXLDTask" label="XL Release: Add XL Deploy task" extends="xlr.RemoteXlrControlTask">
         <property name="scriptLocation" default="xlr/CreateTaskInOtherRelease.py" hidden="true"/>
         <property name="releaseName" category="input" label="Release Name" required="true"
                   description="Name of the release to create the task."/>
@@ -128,5 +120,7 @@
 
     </type>
 
-    <type type="xlr.Server" extends="configuration.HttpConnection"/>
+    <type type="xlr.Server" label="XL Release: Server" extends="configuration.HttpConnection">
+        <property name="enableSslVerification" kind="boolean" default="true" label="Enable SSL Verification" />
+    </type>
 </synthetic>
