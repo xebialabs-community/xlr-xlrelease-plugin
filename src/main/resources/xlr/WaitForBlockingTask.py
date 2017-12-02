@@ -14,9 +14,8 @@
 # FOR A PARTICULAR PURPOSE. THIS CODE AND INFORMATION ARE NOT SUPPORTED BY XEBIALABS.
 #
 
-import sys, string, time
-import com.xhaus.jyson.JysonCodec as json
-from datetime import date
+import json, string, sys, time
+
 
 xlrUrl = xlrServer['url']
 xlrUrl = xlrUrl.rstrip("/")
