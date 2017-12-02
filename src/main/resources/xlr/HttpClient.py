@@ -10,6 +10,9 @@
 
 import requests
 
+def check_response(response, message):
+    if not response.ok:
+        raise Exception(message)
 
 class HttpClient(object):
     def __init__(self, http_connection, username=None, password=None):
@@ -42,6 +45,4 @@ class HttpClient(object):
         return requests.delete(request_url, auth=(self.username, self.password), headers=additional_headers,
                                proxies=self.proxy, verify=self.verify_ssl)
 
-    def check_response(self, response, message):
-        if not response.ok:
-            raise Exception(message)
+

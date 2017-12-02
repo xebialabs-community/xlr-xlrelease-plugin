@@ -13,6 +13,7 @@ import json, urllib
 from datetime import date
 from distutils.version import LooseVersion
 from xlr.HttpClient import HttpClient
+from xlr.HttpClient import check_response
 
 
 class XLTemplate(object):
@@ -32,7 +33,7 @@ class XLReleaseClient(object):
     def get_version(self):
         xlr_api_url = '/server/info'
         xlr_response = self.http_request.get_request(xlr_api_url, additional_headers={"Accept": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to get server info for XL Release")
+        check_response(xlr_response, "Failed to get server info for XL Release")
         data = xlr_response.json()
         return data["version"]
 
@@ -47,7 +48,7 @@ class XLReleaseClient(object):
 
         print "Going to use xlr_api_url: ", xlr_api_url
         xlr_response = self.http_request.get_request(xlr_api_url, additional_headers={"Accept": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to find template in XL Release %s" % template_name)
+        check_response(xlr_response, "Failed to find template in XL Release %s" % template_name)
         data = xlr_response.json()
         for template in data:
             if template["title"] == template_name:
@@ -65,7 +66,7 @@ class XLReleaseClient(object):
         xlr_response = self.http_request.post_request(xlr_api_url, content,
                                                       additional_headers={"Accept": "application/json",
                                                                           "Content-Type": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to create release in XLR")
+        check_response(xlr_response, "Failed to create release in XLR")
         data = xlr_response.json()
         release_id = data["id"]
         print "Created %s in XLR" % release_id
@@ -81,13 +82,13 @@ class XLReleaseClient(object):
         xlr_response = self.http_request.post_request(xlr_api_url, content,
                                                       additional_headers={"Accept": "application/json",
                                                                           "Content-Type": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to start release in XLR")
+        check_response(xlr_response, "Failed to start release in XLR")
         print "Started %s in XLR" % (release_id)
 
     def get_release_status(self, release_id):
         xlr_api_url = '/releases/' + release_id
         xlr_response = self.http_request.get_request(xlr_api_url, additional_headers={"Accept": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to get release status in XLR")
+        check_response(xlr_response, "Failed to get release status in XLR")
         data = xlr_response.json()
         status = data["status"]
         print "Subrelease [%s] has status [%s] in XLR" % (release_id, status)
@@ -96,7 +97,7 @@ class XLReleaseClient(object):
     def get_updatable_variables(self, template_id):
         xlr_api_url = '/api/v1/releases/%s/variables' % template_id
         xlr_response = self.http_request.get_request(xlr_api_url, additional_headers={"Accept": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to get variables in XLR")
+        check_response(xlr_response, "Failed to get variables in XLR")
         return xlr_response.json()
 
     def add_new_task(self, new_task_title, new_task_type, container_id):
@@ -105,7 +106,7 @@ class XLReleaseClient(object):
         xlr_response = self.http_request.post_request(xlr_api_url, json.dumps(content),
                                                       additional_headers={"Accept": "application/json",
                                                                           "Content-Type": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to create %s\n" % new_task_title)
+        check_response(xlr_response, "Failed to create %s\n" % new_task_title)
         print "Created %s\n" % new_task_title
         return xlr_response.json()
 
@@ -115,7 +116,7 @@ class XLReleaseClient(object):
         xlr_response = self.http_request.put_request(xlr_api_url, json.dumps(content),
                                                      additional_headers={"Accept": "application/json",
                                                                          "Content-Type": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to update task\n" % updated_task['title'])
+        check_response(xlr_response, "Failed to update task\n" % updated_task['title'])
         print "Updated task %s\n" % updated_task['title']
 
     def add_link(self, container_id, source_task_id, target_task_id):
@@ -124,7 +125,7 @@ class XLReleaseClient(object):
         xlr_response = self.http_request.post_request(xlr_api_url, json.dumps(content),
                                                       additional_headers={"Accept": "application/json",
                                                                           "Content-Type": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to task link\n")
+        check_response(xlr_response, "Failed to task link\n")
         print "Added task link\n"
 
     def add_dependency(self, dependency_release_id, gate_task_id):
@@ -138,12 +139,12 @@ class XLReleaseClient(object):
         xlr_response = self.http_request.post_request(xlr_api_url, json.dumps(content),
                                                       additional_headers={"Accept": "application/json",
                                                                           "Content-Type": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to add dependency\n")
+        check_response(xlr_response, "Failed to add dependency\n")
         print "Dependency added to Gate task\n"
 
     def delete_phase(self, phase_id):
         phase_id = phase_id.replace("Applications/", "").replace("/", "-")
         xlr_response = self.http_request.delete_request('/phases/%s' % phase_id,
                                                         additional_headers={"Accept": "application/json"})
-        self.http_request.check_response(xlr_response, "Failed to delete phase with id [%s]\n" % phase_id)
+        check_response(xlr_response, "Failed to delete phase with id [%s]\n" % phase_id)
         print "Deleted phase with id [%s]\n" % phase_id
