@@ -69,7 +69,7 @@ class XLReleaseClient(object):
         check_response(xlr_response, "Failed to create release in XLR")
         data = xlr_response.json()
         release_id = data["id"]
-        print "Created %s in XLR" % release_id
+        print "Created [%s](#/releases/%s) in XLR\n" % (release_id, release_id)
         return release_id
 
     def start_release(self, release_id):
@@ -83,7 +83,7 @@ class XLReleaseClient(object):
                                                       additional_headers={"Accept": "application/json",
                                                                           "Content-Type": "application/json"})
         check_response(xlr_response, "Failed to start release in XLR")
-        print "Started %s in XLR" % (release_id)
+        print "Started [%s](#/releases/%s) in XLR\n" % (release_id, release_id)
 
     def get_release_status(self, release_id):
         xlr_api_url = '/releases/' + release_id
@@ -91,7 +91,7 @@ class XLReleaseClient(object):
         check_response(xlr_response, "Failed to get release status in XLR")
         data = xlr_response.json()
         status = data["status"]
-        print "Subrelease [%s] has status [%s] in XLR" % (release_id, status)
+        print "Subrelease [%s](#/releases/%s) has status [%s] in XLR\n" % (release_id, release_id, status)
         return status
 
     def get_updatable_variables(self, template_id):
