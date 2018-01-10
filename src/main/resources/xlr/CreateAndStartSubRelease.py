@@ -56,10 +56,10 @@ xlr_client.start_release(release_id)
 while not asynch:
     status = xlr_client.get_release_status(release_id)
     if status == "COMPLETED":
-        print "Subrelease %s completed in XLR" % (release_id)
+        print "Subrelease [%s](#/releases/%s) completed in XLR" % (release_id, release_id)
         break
     if status == "ABORTED":
-        print "Subrelease %s aborted in XLR" % (release_id)
+        print "Subrelease [%s](#/releases/%s) aborted in XLR" % (release_id, release_id)
         sys.exit(1)
     time.sleep(5)
 
