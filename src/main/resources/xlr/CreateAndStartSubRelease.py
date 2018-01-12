@@ -8,7 +8,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-
+import json
 import sys
 import time
 
@@ -19,18 +19,20 @@ def find_planned_gate_task(tasks):
         if task.getType() == "xlrelease.GateTask" and task["status"] == "PLANNED":
             return task
 
-def process_variables(variables, updatable_variables):
+def process_variables(variables, variable_map, updatable_variables):
     var_map = {}
     if variables is not None:
         for variable in variables.split(','):
             var_map[variable.split('=', 1)[0]]= variable.split('=', 1)[1]
+
+    var_map.update(variable_map)
 
     for updatable_variable in updatable_variables:
         key = str(updatable_variable["key"]).strip("${").strip("}")
         if key in var_map:
             updatable_variable["value"] = var_map[key]
 
-    return str(updatable_variables).replace("u'","'").replace("'", '"').replace("None","null").replace("True","true").replace("False","false")
+    return json.dumps(updatable_variables).replace("None","null").replace("True","true").replace("False","false")
 
 if xlrServer is None:
     print "No server provided."
@@ -43,7 +45,7 @@ template = xlr_client.get_template(templateName)
 
 # Create Release
 updatable_variables = xlr_client.get_updatable_variables(template.id)
-vars = process_variables(variables, updatable_variables)
+vars = process_variables(variables, variableMap, updatable_variables)
 if releaseDescription is None:
     releaseDescription = ""
 
