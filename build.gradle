@@ -29,7 +29,11 @@ if (!project.hasProperty('release.useLastTag')) {
 }
 
 dependencies {
-  jython ":requests:2.11.1"
+  jython ":certifi:2017.4.17"
+  jython ":urllib3:1.22"
+  jython ":idna:2.6"
+  jython ":chardet:3.0.4"
+  jython ":requests:2.18.4"
 }
 
 processResources.configure {
@@ -44,5 +48,9 @@ license {
   strictCheck false
   ext.year = Calendar.getInstance().get(Calendar.YEAR)
   ext.name = 'XEBIALABS'
+  excludes(["**/certifi/**/*.py"])
+  excludes(["**/urllib3/**/*.py"])
+  excludes(["**/idna/**/*.py"])
+  excludes(["**/chardet/**/*.py"])
   excludes(["**/requests/**/*.py"])
 }
