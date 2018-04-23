@@ -97,5 +97,12 @@ For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
   * `deploymentEnvironment`: Environment to deploy to.
   * `rollbackOnFailure`: Rollback on failure controls whether or not the task is rolled back.
 
-  ![SetTags](images/add-xl-deploy-task.png)
+  ![AddXLDeployTask](images/add-xl-deploy-task.png)
+  
++ Wait for release completion or failure
+  * The task waits for a target release to complete, fail or be aborted. It can be used for example to implement an on-failure hook for a release: you can spawn another release which starts monitoring your main release, and sends a notification message when it's finished or fails. The output property `Release Status` can be used in preconditions of the monitoring release to control which action to take.
+  * `Release ID`: ID of the target release to wait for. Currently on releases are supported, you cannot wait for a phase or a task.
+  * `Release Status`: The status of the release when this task finishes. One of `COMPLETED`, `FAILED` or `ABORTED`.
+  
+  ![FailableGateTask](images/FailableGateTask.png)
   
