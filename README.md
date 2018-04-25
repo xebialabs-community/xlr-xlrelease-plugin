@@ -99,10 +99,10 @@ For XL Release version 4.8.x you'll need at least version 1.7.x of the plugin.
 
   ![AddXLDeployTask](images/add-xl-deploy-task.png)
   
-+ Wait for release completion or failure
-  * The task waits for a target release to complete, fail or be aborted. It can be used for example to implement an on-failure hook for a release: you can spawn another release which starts monitoring your main release, and sends a notification message when it's finished or fails. The output property `Release Status` can be used in preconditions of the monitoring release to control which action to take.
++ Wait for release status
+  * The task waits for a target release to reach a particular status. It can be used for example to implement an on-failure hook for a release: you can spawn another release which starts monitoring your main release, and sends a notification message when it's finished or fails. The output property `Release Status` can be used in preconditions of the monitoring release to control which action to take. Note that this task is polling the status every 5 seconds, so it can miss if a target release went through a status too quickly.
   * `Release ID`: ID of the target release to wait for. Currently on releases are supported, you cannot wait for a phase or a task.
-  * `Release Status`: The status of the release when this task finishes. One of `COMPLETED`, `FAILED` or `ABORTED`.
+  * `In Progress`, `Completed` etc: checked if this task should complete when the target release is in one of the corresponding statuses.
+  * `Release Status`: The status of the release when this task finishes. It will be one of the checked statuses.
   
-  ![FailableGateTask](images/FailableGateTask.png)
-  
+  ![WaitForReleaseStatus](images/WaitForReleaseStatus.png)

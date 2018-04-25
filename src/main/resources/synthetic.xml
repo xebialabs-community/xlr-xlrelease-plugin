@@ -122,12 +122,33 @@
     </type>
 
     <type type="xlr.FailableGateTask" label="XL Release: Failable Gate" extends="xlrelease.PythonScript">
-        <property name="iconLocation" default="xlr/xlr.png" hidden="true"/>
         <property name="taskColor" hidden="true" default="#AA217E"/>
         <property name="targetId" label="Release ID" category="input" required="true"
                   description="ID of the release for which this task will wait to complete or fail."/>
         <property name="targetStatus" label="Release Status" category="output" required="false"
                   description="The status of the target release: one of COMPLETED, FAILED and ABORTED"/>
+    </type>
+
+    <type type="xlr.WaitForReleaseStatus" label="XL Release: Wait for Release Status" extends="xlrelease.PythonScript">
+        <property name="taskColor" hidden="true" default="#AA217E"/>
+
+        <property name="targetId" label="Release ID" category="input" required="true"
+                  description="ID of the release for which status to wait for."/>
+        <property name="untilInProgress" label="In Progress" category="input" required="false" kind="boolean"
+                  description="Pass when the release is in progress"/>
+        <property name="untilPaused" label="Paused" category="input" required="false" kind="boolean"
+                  description="Pass when the release is paused (can happen as part of a phase restart)"/>
+        <property name="untilFailing" label="Failing" category="input" required="false" kind="boolean"
+                  description="Pass when the release is failing (some tasks failed, some still in progress)"/>
+        <property name="untilFailed" label="Failed" category="input" required="false" kind="boolean"
+                  description="Pass when the release has failed"/>
+        <property name="untilCompleted" label="Completed" category="input" required="false" kind="boolean"
+                  description="Pass if the release has completed"/>
+        <property name="untilAborted" label="Aborted" category="input" required="false" kind="boolean"
+                  description="Pass if the release has been aborted"/>
+
+        <property name="targetStatus" label="Release Status" category="output" required="false"
+                  description="The matched status of the target release"/>
     </type>
 
     <type type="xlr.Server" label="XL Release: Server" extends="configuration.HttpConnection">

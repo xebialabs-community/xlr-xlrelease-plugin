@@ -10,18 +10,13 @@
 
 
 import sys
-from com.xebialabs.deployit.exception import NotFoundException
-
+import xlr
 
 if 'Release' not in targetId:
     print("Passed ID does not look like a release ID: [%s]" % targetId)
     sys.exit(1)
 
-# get target release from current or archived DB
-try:
-    targetRelease = releaseApi.getRelease(targetId)
-except NotFoundException:
-    targetRelease = releaseApi.getArchivedRelease(targetId)
+targetRelease = xlr.get_release(releaseApi, targetId)
 
 status = str(targetRelease.getStatus())
 if status in ['COMPLETED', 'FAILED', 'ABORTED']:

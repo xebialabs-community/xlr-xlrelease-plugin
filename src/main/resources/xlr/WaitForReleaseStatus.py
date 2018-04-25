@@ -8,35 +8,30 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-import os
-import tempfile
-from com.xebialabs.xlr.ssl import LoaderUtil
-from java.nio.file import Files, Paths, StandardCopyOption
-from com.xebialabs.deployit.exception import NotFoundException
 
+import sys
+import xlr
 
-def set_ca_bundle_path():
-    ca_bundle_path = extract_file_from_jar("requests/cacert.pem")
-    os.environ['REQUESTS_CA_BUNDLE'] = ca_bundle_path
+accepted_statuses = []
+if untilInProgress: accepted_statuses.append('IN_PROGRESS')
+if untilPaused: accepted_statuses.append('PAUSED')
+if untilFailing: accepted_statuses.append('FAILING')
+if untilFailed: accepted_statuses.append('FAILED')
+if untilCompleted: accepted_statuses.append('COMPLETED')
+if untilAborted: accepted_statuses.append('ABORTED')
+if not accepted_statuses:
+    print("At least one status has to be selected")
+    sys.exit(1)
 
+if 'Release' not in targetId:
+    print("Passed ID does not look like a release ID: [%s]" % targetId)
+    sys.exit(1)
 
-def extract_file_from_jar(config_file):
-    file_url = LoaderUtil.getResourceBySelfClassLoader(config_file)
-    if file_url:
-        tmp_file, tmp_abs_path = tempfile.mkstemp()
-        tmp_file.close()
-        Files.copy(file_url.openStream(), Paths.get(tmp_abs_path), StandardCopyOption.REPLACE_EXISTING)
-        return tmp_abs_path
-    else:
-        return None
-
-if 'REQUESTS_CA_BUNDLE' not in os.environ:
-    set_ca_bundle_path()
-
-
-def get_release(release_api, release_id):
-    """Get a release from current or archived DB"""
-    try:
-        return release_api.getRelease(release_id)
-    except NotFoundException:
-        return release_api.getArchivedRelease(release_id)
+targetRelease = xlr.get_release(releaseApi, targetId)
+status = str(targetRelease.getStatus())
+if status in accepted_statuses:
+    targetStatus = status
+else:
+    # continue polling
+    task.setStatusLine('Release is %s' % status.lower().replace('_', ' '))
+    task.schedule('xlr/WaitForReleaseStatus.py')
