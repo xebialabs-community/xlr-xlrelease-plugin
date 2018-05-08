@@ -9,9 +9,18 @@
 #
 
 xlr:
-  image: xebialabs/xlr_dev_run:v7.5.0.1
+  image: xebialabs/xlr_dev_run:v8.0.0.1
   volumes:
     - ~/xl-licenses:/license
     - ./../../../../:/data
   ports:
    - "15516:5516"
+
+xlr_ssl:
+  image: xebialabs/xlr_dev_run:v8.0.0.1
+  volumes:
+    - ~/xl-licenses:/license
+    - ./ssl/xl-release-server.conf:/opt/xlr/server/conf/xl-release-server.conf
+    - ./ssl/keystore.jks:/opt/xlr/server/conf/keystore.jks
+  ports:
+   - "25516:5516"

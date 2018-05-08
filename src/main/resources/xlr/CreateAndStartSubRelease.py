@@ -21,6 +21,7 @@ def find_planned_gate_task(tasks):
 
 def process_variables(variables, variable_map, updatable_variables):
     var_map = {}
+    result = {}
     if variables is not None:
         for variable in variables.split(','):
             var_map[variable.split('=', 1)[0]]= variable.split('=', 1)[1]
@@ -31,8 +32,9 @@ def process_variables(variables, variable_map, updatable_variables):
         key = str(updatable_variable["key"]).strip("${").strip("}")
         if key in var_map:
             updatable_variable["value"] = var_map[key]
+            result[key] = updatable_variable["value"]
 
-    return json.dumps(updatable_variables).replace("None","null").replace("True","true").replace("False","false")
+    return json.dumps(result).replace("None","null").replace("True","true").replace("False","false")
 
 if xlrServer is None:
     print "No server provided."
@@ -44,24 +46,21 @@ xlr_client = XLReleaseClientUtil.create_xl_release_client(xlrServer, username, p
 template = xlr_client.get_template(templateName)
 
 # Create Release
-updatable_variables = xlr_client.get_updatable_variables(template.id)
+updatable_variables = xlr_client.get_updatable_variables(template["id"])
 vars = process_variables(variables, variableMap, updatable_variables)
 if releaseDescription is None:
     releaseDescription = ""
 
-release_id = xlr_client.create_release(releaseTitle, releaseDescription, vars, repr(template.tags).replace("'",'"'), template.id.split("/", 1)[1])
-
-# Start Release
-xlr_client.start_release(release_id)
+release_id = xlr_client.create_release(releaseTitle, releaseDescription, vars, template)
 
 # Wait for subrelease to be finished (only if asynch is false)
 while not asynch:
     status = xlr_client.get_release_status(release_id)
+    print "Subrelease [%s](#/releases/%s) has status [%s] in XLR\n" % (
+            releaseTitle, release_id.replace("Applications/",""), status)
     if status == "COMPLETED":
-        print "Subrelease [%s](#/releases/%s) completed in XLR" % (release_id, release_id)
         break
     if status == "ABORTED":
-        print "Subrelease [%s](#/releases/%s) aborted in XLR" % (release_id, release_id)
         sys.exit(1)
     time.sleep(5)
 
