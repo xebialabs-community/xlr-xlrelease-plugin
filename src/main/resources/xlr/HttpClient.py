@@ -10,10 +10,6 @@
 
 import requests
 
-def check_response(response, message):
-    if not response.ok:
-        raise Exception(message)
-
 class HttpClient(object):
     def __init__(self, http_connection, username=None, password=None):
         self.http_connection = http_connection
