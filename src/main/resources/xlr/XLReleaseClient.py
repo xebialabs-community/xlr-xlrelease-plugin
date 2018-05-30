@@ -65,7 +65,7 @@ class XLReleaseClient(object):
         data = xlr_response.json()
         release_id = data["id"]
         print "Created [%s](#/releases/%s) in XLR\n" % (release_id,
-                                                        release_id.replace("Applications/", ""))
+                                                        release_id.replace("Applications/", "").replace("/","-"))
         self.update_release(data, release_description)
         return release_id
 
