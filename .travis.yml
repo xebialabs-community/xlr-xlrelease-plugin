@@ -1,5 +1,10 @@
 language: java
 sudo: false
+addons:
+  apt:
+    packages:
+    - httpie
+    - jq
 env:
   global:
   - WEB_SERVER=http://localhost:15516
