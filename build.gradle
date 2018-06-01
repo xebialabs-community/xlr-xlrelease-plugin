@@ -41,6 +41,15 @@ dependencies {
   testCompile "com.xebialabs.gradle.plugins:xl-test-api:0.0.2"
 }
 
+test {
+    useTestNG() {
+        //set TestNG output dir
+        outputDirectory = file("$project.buildDir//testngOutput")
+        //required to turn on TestNG reports
+        useDefaultListeners = true
+    }
+}
+
 processResources.configure {
   filter ReplaceTokens, tokens: [
     'project.version': version.toString(),
