@@ -28,8 +28,26 @@ if (!project.hasProperty('release.useLastTag')) {
   project.ext['release.useLastTag'] = true
 }
 
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url 'https://dist.xebialabs.com/public/maven2'
+  }
+}
+
 dependencies {
   jython ":requests:2.11.1"
+  testCompile "com.xebialabs.gradle.plugins:xl-test-api:0.0.3"
+}
+
+test {
+    useTestNG() {
+        //set TestNG output dir
+        outputDirectory = file("$project.buildDir//testngOutput")
+        //required to turn on TestNG reports
+        useDefaultListeners = true
+    }
 }
 
 processResources.configure {
