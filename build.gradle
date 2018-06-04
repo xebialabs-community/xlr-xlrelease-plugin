@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
   id "com.github.hierynomus.license" version "0.14.0"
   id "com.xebialabs.xl.docker" version "1.1.0"
@@ -46,6 +48,13 @@ test {
         //required to turn on TestNG reports
         useDefaultListeners = true
     }
+}
+
+processResources.configure {
+  filter ReplaceTokens, tokens: [
+    'project.version': version.toString(),
+    'project.name'   : rootProject.name
+  ]
 }
 
 license {
