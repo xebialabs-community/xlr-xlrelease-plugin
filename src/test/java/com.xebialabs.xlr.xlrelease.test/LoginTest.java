@@ -22,7 +22,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void OpenConfigurationJenkins(){
+    public void openConfigurationJenkins(){
         MainMenu.clickMenu("Settings");
         SubMenu.clickSubMenu("Shared configuration");
         SharedConfigurationPage.openSharedConfiguration("Jenkins: Server");
@@ -30,7 +30,7 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void OpenConfigurationGit(){
+    public void openConfigurationGit(){
         MainMenu.clickMenu("Settings");
         SubMenu.clickSubMenu("Shared configuration");
         SharedConfigurationPage.openSharedConfiguration("Git: Repository");
