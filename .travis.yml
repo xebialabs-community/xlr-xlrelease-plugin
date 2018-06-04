@@ -14,7 +14,7 @@ env:
   - secure: gj+ET01AuduvCv/Ld/+8cAVOGt0e2JfktZVoYM6uJAGVFClIHGp3uOGhojxwsLqf7+FJwDhr/McBJNfSzY3KXZYksh1Mqj0fBd9JN9Nsew3tq9pZD9gzQ0a997TEqUhk9SZ0oeCincaf+9pX5NRE1SmopvQuDS5tG2Se2fQJhSs=
 script:
 - mkdir -p ./xl-licenses
-- http --print=h --auth $USERNAME:$PASSWORD --json POST https://download.xebialabs.com/api/temporary/xl-release
+- http --check-status --print=h --auth $USERNAME:$PASSWORD --json POST https://download.xebialabs.com/api/temporary/xl-release
   firstName=xlc lastName=xlc email=xlc@xebialabs.com company=xebialabs
 - "./gradlew clean assemble"
 - docker run --rm -d -v $PWD/build/libs/.:/opt/xlr/server/plugins/__local__ -v $PWD/xl-licenses:/license
