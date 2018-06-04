@@ -19,6 +19,7 @@ script:
 - docker run --rm -d -v $PWD/build/libs/.:/opt/xlr/server/plugins/__local__ -v $PWD/xl-licenses:/license
   -p 5516:5516 --name xlr xebialabs/xl-docker-demo-xlr:latest
 - "./gradlew test"
+- docker logs xlr
 - docker stop xlr
 notifications:
   hipchat:
