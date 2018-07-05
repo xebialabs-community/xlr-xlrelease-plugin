@@ -64,7 +64,7 @@ class XLReleaseClient(object):
         xlr_response.raise_for_status()
         data = xlr_response.json()
         release_id = data["id"]
-        print "Created [%s](#/releases/%s) in XLR\n" % (release_id,get_release_url(release_id))
+        print "Created [%s](#/releases/%s) in XLR\n" % (release_id, self.get_release_url(release_id))
         self.update_release(data, release_description)
         return release_id
 
