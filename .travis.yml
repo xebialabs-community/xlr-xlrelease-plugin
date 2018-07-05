@@ -13,15 +13,7 @@ env:
   - secure: kNnTczWZSlT4XokguN3PVz1D+lqNjwPO09w/9bpKJ+ETJPPvUfbMYB6XwQZx8/kwTAXuytXfvFTpUqCQ3Gqr0ARuQ+tCQ3UNJewoQ2y7lOW9BcADiGxDL5A5N7aVOkSg76zg+6lUj3MWR9wq187MEWwyoLb61V7xVF+wclONUeU=
   - secure: gj+ET01AuduvCv/Ld/+8cAVOGt0e2JfktZVoYM6uJAGVFClIHGp3uOGhojxwsLqf7+FJwDhr/McBJNfSzY3KXZYksh1Mqj0fBd9JN9Nsew3tq9pZD9gzQ0a997TEqUhk9SZ0oeCincaf+9pX5NRE1SmopvQuDS5tG2Se2fQJhSs=
 script:
-- mkdir -p ./xl-licenses
-- http --check-status --print=b --auth $username:$password --json POST https://download.xebialabs.com/api/temporary/xl-release firstName=xlc lastName=xlc email=xlc@xebialabs.com company=xebialabs | jq --raw-output '.license' > ./xl-licenses/xl-release-license.lic
-- "./gradlew clean assemble"
-- echo "plugin_jar=`ls build/libs | sort -n | head -1`" > src/test/resources/docker/.env
-- docker-compose -f src/test/resources/docker/docker-compose.yml up -d
-- docker wait credentials_updater
-- docker logs xlr
-- "./gradlew itest"
-- docker-compose -f src/test/resources/docker/docker-compose.yml stop
+- ./travis-ci.sh
 notifications:
   hipchat:
     rooms:
