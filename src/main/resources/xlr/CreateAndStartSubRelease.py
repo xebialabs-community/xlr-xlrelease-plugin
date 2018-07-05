@@ -13,6 +13,7 @@ import sys
 import time
 
 from xlr.XLReleaseClientUtil import XLReleaseClientUtil
+from xlr.XLReleaseClient import XLReleaseClient
 
 def find_planned_gate_task(tasks):
     for task in tasks:
@@ -57,7 +58,7 @@ release_id = xlr_client.create_release(releaseTitle, releaseDescription, vars, t
 while not asynch:
     status = xlr_client.get_release_status(release_id)
     print "Subrelease [%s](#/releases/%s) has status [%s] in XLR\n" % (
-            releaseTitle, release_id.replace("Applications/",""), status)
+            releaseTitle, XLReleaseClient.get_release_url(release_id), status)
     if status == "COMPLETED":
         break
     if status == "ABORTED":
