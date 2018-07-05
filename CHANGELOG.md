@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## v2.3.4
+
+### Fixed
+- fix: Using correct parsing to display release url links in comments.
+
+### Improved
+- added automated testing framework
+
 ## v2.3.3
 
 ### Fixed
