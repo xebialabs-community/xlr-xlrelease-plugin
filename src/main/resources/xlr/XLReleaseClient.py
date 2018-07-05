@@ -64,10 +64,12 @@ class XLReleaseClient(object):
         xlr_response.raise_for_status()
         data = xlr_response.json()
         release_id = data["id"]
-        print "Created [%s](#/releases/%s) in XLR\n" % (release_id,
-                                                        release_id.replace("Applications/", "").replace("/","-"))
+        print "Created [%s](#/releases/%s) in XLR\n" % (release_id,get_release_url(release_id))
         self.update_release(data, release_description)
         return release_id
+
+    def get_release_url(self, release_id):
+        return release_id.replace("Applications/","").replace("/","-")
 
     def update_release(self, release, release_description):
         release["description"] = release_description
