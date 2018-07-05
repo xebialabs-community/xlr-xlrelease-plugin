@@ -22,6 +22,10 @@ class XLReleaseClient(object):
     def create_client(http_connection, username=None, password=None):
         return XLReleaseClient(http_connection, username, password)
 
+    @staticmethod
+    def get_release_url(release_id):
+        return release_id.replace("Applications/","").replace("/","-")
+
     def get_version(self):
         xlr_api_url = '/server/info'
         xlr_response = self.http_request.get_request(
@@ -64,12 +68,9 @@ class XLReleaseClient(object):
         xlr_response.raise_for_status()
         data = xlr_response.json()
         release_id = data["id"]
-        print "Created [%s](#/releases/%s) in XLR\n" % (release_id, self.get_release_url(release_id))
+        print "Created [%s](#/releases/%s) in XLR\n" % (release_id, XLReleaseClient.get_release_url(release_id))
         self.update_release(data, release_description)
         return release_id
-
-    def get_release_url(self, release_id):
-        return release_id.replace("Applications/","").replace("/","-")
 
     def update_release(self, release, release_description):
         release["description"] = release_description
