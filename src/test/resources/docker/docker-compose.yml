@@ -14,7 +14,7 @@ services:
     container_name: xlr
     volumes:
       - ./../../../../xl-licenses/xl-release-license.lic:/opt/xl-release-server/default-conf/xl-release-license.lic
-      - ./../../../../build/libs/${plugin_jar}:/opt/xl-release-server/default-plugins/${plugin_jar}
+      - ./../../../../build/libs/${plugin_jar}:/opt/xl-release-server/default-plugins/__local__/${plugin_jar}
     environment:
       - ADMIN_PASSWORD=admin
     ports:
