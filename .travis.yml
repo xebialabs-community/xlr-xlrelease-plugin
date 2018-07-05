@@ -1,5 +1,6 @@
-language: java
-sudo: false
+sudo: required
+services:
+- docker
 addons:
   chrome: stable
   apt:
@@ -8,20 +9,10 @@ addons:
     - jq
 env:
   global:
-  - WEB_SERVER=http://localhost:5516
-  - BROWSER=chrome
   - secure: kNnTczWZSlT4XokguN3PVz1D+lqNjwPO09w/9bpKJ+ETJPPvUfbMYB6XwQZx8/kwTAXuytXfvFTpUqCQ3Gqr0ARuQ+tCQ3UNJewoQ2y7lOW9BcADiGxDL5A5N7aVOkSg76zg+6lUj3MWR9wq187MEWwyoLb61V7xVF+wclONUeU=
   - secure: gj+ET01AuduvCv/Ld/+8cAVOGt0e2JfktZVoYM6uJAGVFClIHGp3uOGhojxwsLqf7+FJwDhr/McBJNfSzY3KXZYksh1Mqj0fBd9JN9Nsew3tq9pZD9gzQ0a997TEqUhk9SZ0oeCincaf+9pX5NRE1SmopvQuDS5tG2Se2fQJhSs=
 script:
-- mkdir -p ./xl-licenses
-- http --check-status --print=b --auth $username:$password --json POST https://download.xebialabs.com/api/temporary/xl-release firstName=xlc lastName=xlc email=xlc@xebialabs.com company=xebialabs | jq --raw-output '.license' > ./xl-licenses/xl-release-license.lic
-- "./gradlew clean assemble"
-- docker run --rm -d -v $PWD/build/libs/.:/opt/xlr/server/plugins/__local__ -v $PWD/xl-licenses:/license
-  -p 5516:5516 --name xlr xebialabs/xl-docker-demo-xlr:latest
-- sleep 60
-- docker logs xlr
-- "./gradlew test"
-- docker stop xlr
+- ./travis-ci.sh
 notifications:
   hipchat:
     rooms:

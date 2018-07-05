@@ -9,3 +9,5 @@ src/downloads/*
 build
 supervisord.*
 *.DS_Store
+src/test/resources/docker/.env
+xl-licenses

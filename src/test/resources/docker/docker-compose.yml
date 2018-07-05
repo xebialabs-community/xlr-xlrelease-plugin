@@ -7,20 +7,31 @@
 #
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
+version: "3"
+services:
+  xlr:
+    image: xebialabs/xl-release:8.1.0
+    container_name: xlr
+    volumes:
+      - ./../../../../xl-licenses/xl-release-license.lic:/opt/xl-release-server/default-conf/xl-release-license.lic
+      - ./../../../../build/libs/${plugin_jar}:/opt/xl-release-server/default-plugins/__local__/${plugin_jar}
+    environment:
+      - ADMIN_PASSWORD=admin
+    ports:
+    - "5516:5516"
+  
+  credentials:
+    image: xebialabsunsupported/xl-docker-demo-xlr-credentials-updater:latest
+    container_name: credentials_updater
+    links:
+      - xlr
 
-xlr:
-  image: xebialabs/xlr_dev_run:v8.0.0.1
-  volumes:
-    - ~/xl-licenses:/license
-    - ./../../../../:/data
-  ports:
-   - "15516:5516"
+  xlr_ssl:
+    image: xebialabs/xlr_dev_run:v8.0.0.1
+    volumes:
+      - ~/xl-licenses:/license
+      - ./ssl/xl-release-server.conf:/opt/xlr/server/conf/xl-release-server.conf
+      - ./ssl/keystore.jks:/opt/xlr/server/conf/keystore.jks
+    ports:
+    - "25516:5516"
 
-xlr_ssl:
-  image: xebialabs/xlr_dev_run:v8.0.0.1
-  volumes:
-    - ~/xl-licenses:/license
-    - ./ssl/xl-release-server.conf:/opt/xlr/server/conf/xl-release-server.conf
-    - ./ssl/keystore.jks:/opt/xlr/server/conf/keystore.jks
-  ports:
-   - "25516:5516"
