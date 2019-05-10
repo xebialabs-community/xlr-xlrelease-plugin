@@ -12,11 +12,10 @@ env:
   - secure: kNnTczWZSlT4XokguN3PVz1D+lqNjwPO09w/9bpKJ+ETJPPvUfbMYB6XwQZx8/kwTAXuytXfvFTpUqCQ3Gqr0ARuQ+tCQ3UNJewoQ2y7lOW9BcADiGxDL5A5N7aVOkSg76zg+6lUj3MWR9wq187MEWwyoLb61V7xVF+wclONUeU=
   - secure: gj+ET01AuduvCv/Ld/+8cAVOGt0e2JfktZVoYM6uJAGVFClIHGp3uOGhojxwsLqf7+FJwDhr/McBJNfSzY3KXZYksh1Mqj0fBd9JN9Nsew3tq9pZD9gzQ0a997TEqUhk9SZ0oeCincaf+9pX5NRE1SmopvQuDS5tG2Se2fQJhSs=
 script:
-- ./travis-ci.sh
+- "./travis-ci.sh"
 notifications:
-  hipchat:
-    rooms:
-      secure: j3hkJ/Etd8gQDvhpgwBJhutwFA1vex8Q18FMsfiSih1JDoA+PJNfzyG21UmO0g2CDMBfcniKWTHN6VZpN+jSgeZ+UCbz1NMc8rGT1KgexI6CcH1DLGNFJ1o+5oToNZHfRyA7QB1zJz8q8gxrSVPHdqZgb8doAcvMFK0GqewY9dI=
+  slack:
+    secure: EMNAL2NBygK9HV4M7hdcXIlNsNgZKhvwhvgdZHbTfcHekVc6O7i44lx2MaCH72FRP7o+5YWIzVEBEBOWcUbfvzkHN9TuJB0pcFzIbkcqv7awG9gMu9FrvSmUgPOKWnBC4dJrRovVREiiBbYnZlJer6fhN+H7BGIv6zJg5IUdC9M=
 deploy:
   provider: releases
   api_key:
