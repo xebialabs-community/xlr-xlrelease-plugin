@@ -36,7 +36,7 @@ repositories {
 
 dependencies {
   jython ":requests:2.11.1"
-  testCompile "com.xebialabs.gradle.plugins:xl-test-api:0.0.6"
+  testCompile "com.xebialabs.gradle.plugins:xl-test-api:0.0.80"
 }
 
 task itest(type: Test) {
