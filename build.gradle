@@ -1,23 +1,36 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 plugins {
-  id "com.github.hierynomus.license" version "0.14.0"
-  id 'nebula.release' version '6.0.0'
+  id "com.github.hierynomus.license" version "0.14.0"  
+  id 'nebula.release' version '11.0.0'
   id "com.xebialabs.xl.docker" version "1.1.0"
   id "com.github.hierynomus.jython" version "0.8.0"
 }
 
-group 'com.xebialabs.xlrelease.plugins'
-
-apply plugin: 'java'
-apply plugin: 'idea'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'java'
 apply plugin: 'maven'
 
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url 'https://dist.xebialabs.com/public/maven2'
+  }
+}
+
+def apiVersion = "2018.6.5"
+
+// sourceCompatibility = 1.7
+// targetCompatibility = 1.7
+
 xlDocker {
-  compileImage = 'xebialabsunsupported/xlr_dev_compile'
-  compileVersion = '9.0'
-  runImage = 'xebialabsunsupported/xlr_dev_run'
-  runVersion = '9.0'
-  runPortMapping = '5516:5516'
+  compileImage = 'xebialabs/xlr_dev_compile'
+  compileVersion = 'v8.5.0.1'
+  runImage = 'xebialabs/xlr_dev_run'
+  runVersion = 'v8.5.0.1'
+  runPortMapping = '15516:5516'
 }
 
 if (!project.hasProperty('release.scope')) {
@@ -28,16 +41,8 @@ if (!project.hasProperty('release.useLastTag')) {
   project.ext['release.useLastTag'] = true
 }
 
-repositories {
-  mavenLocal()
-  mavenCentral()
-  maven {
-    url 'https://dist.xebialabs.com/public/maven2'
-  }
-}
-
 dependencies {
-  jython ":requests:2.11.1"
+  jython ":requests:2.22.0"  
   testCompile "com.xebialabs.gradle.plugins:xl-test-api:0.0.80"
 }
 
@@ -51,7 +56,7 @@ task itest(type: Test) {
     }
 }
 
-license {
+license { 
   header rootProject.file('License.md')
   strictCheck true
   ext.year = Calendar.getInstance().get(Calendar.YEAR)
