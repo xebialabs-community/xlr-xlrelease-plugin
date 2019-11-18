@@ -1,9 +1,11 @@
 plugins {
   id "com.github.hierynomus.license" version "0.14.0"
-  id "com.xebialabs.xl.docker" version "1.1.0"
   id 'nebula.release' version '6.0.0'
+  id "com.xebialabs.xl.docker" version "1.1.0"
   id "com.github.hierynomus.jython" version "0.8.0"
 }
+
+group 'com.xebialabs.xlrelease.plugins'
 
 apply plugin: 'java'
 apply plugin: 'idea'
@@ -11,11 +13,11 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 xlDocker {
-  compileImage = 'xebialabs/xlr_dev_compile'
-  compileVersion = 'v8.0.0.1'
-  runImage = 'xebialabs/xlr_dev_run'
-  runVersion = 'v8.0.0.2'
-  runPortMapping = '15516:5516'
+  compileImage = 'xebialabsunsupported/xlr_dev_compile'
+  compileVersion = '9.0'
+  runImage = 'xebialabsunsupported/xlr_dev_run'
+  runVersion = '9.0'
+  runPortMapping = '5516:5516'
 }
 
 if (!project.hasProperty('release.scope')) {
@@ -56,3 +58,4 @@ license {
   ext.name = 'XEBIALABS'
   excludes(["**/requests/**/*.py"])
 }
+
