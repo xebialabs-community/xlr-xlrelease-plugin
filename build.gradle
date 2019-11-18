@@ -42,7 +42,7 @@ if (!project.hasProperty('release.useLastTag')) {
 }
 
 dependencies {
-  jython ":requests:2.22.0"  
+  jython ":requests:2.19.1"
   testCompile "com.xebialabs.gradle.plugins:xl-test-api:0.0.80"
 }
 
