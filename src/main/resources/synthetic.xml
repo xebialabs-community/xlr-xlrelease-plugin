@@ -14,8 +14,8 @@
            xsi:schemaLocation="http://www.xebialabs.com/deployit/synthetic synthetic.xsd" xmlns="http://www.xebialabs.com/deployit/synthetic">
 
     <type type="xlr.XlrControlTask" extends="xlrelease.PythonScript" virtual="true">
-        <property name="iconLocation" default="xlr/xlr.png" hidden="true"/>
-        <property name="taskColor" hidden="true" default="#AA217E"/>
+        <property name="iconLocation" default="xlr/release.png" hidden="true"/>
+        <property name="taskColor" hidden="true" default="#80B528"/>
     </type>
 
     <type type="xlr.RemoteXlrControlTask" extends="xlr.XlrControlTask" virtual="true">
