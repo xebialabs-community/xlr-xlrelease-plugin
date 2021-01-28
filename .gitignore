@@ -15,3 +15,4 @@ xl-licenses
 *.iws
 
 .vscode/
+output.*

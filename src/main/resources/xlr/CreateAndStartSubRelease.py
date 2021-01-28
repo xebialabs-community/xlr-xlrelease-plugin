@@ -1,5 +1,5 @@
 #
-# Copyright 2020 XEBIALABS
+# Copyright 2021 XEBIALABS
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 #
@@ -45,6 +45,9 @@ xlr_client = XLReleaseClientUtil.create_xl_release_client(xlrServer, username, p
 
 #Get Template id
 template = xlr_client.get_template(templateName)
+if template is None:
+    print "No template named "+templateName
+    sys.exit(1)
 
 # Create Release
 updatable_variables = xlr_client.get_updatable_variables(template["id"])
