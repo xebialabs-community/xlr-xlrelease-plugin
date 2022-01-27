@@ -29,9 +29,9 @@ if 'Release' not in targetId:
 
 targetRelease = xlr.get_release(releaseApi, targetId)
 status = str(targetRelease.getStatus())
+task.setStatusLine('Release is %s' % status.lower().replace('_', ' '))
 if status in accepted_statuses:
     targetStatus = status
 else:
     # continue polling
-    task.setStatusLine('Release is %s' % status.lower().replace('_', ' '))
     task.schedule('xlr/WaitForReleaseStatus.py')
